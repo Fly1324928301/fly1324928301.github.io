@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="括弧笑" />
+
+
+
+  <meta name="keywords" content="iOS NSRunLoop," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="iPhone应用开发中关于NSRunLoop的概述是本文要介绍的内容，NSRunLoop是一种更加高明的消息处理模式，他就高明在对消息处理过程进行了更好的抽象和封装，这样才能是的你不用处理一些很琐碎很低层次的具体消息的处理，在NSRunLoop中每一个消息就被打包在input source或者是timer source中了，来看详细内容。
+1.什么是NSRunLoop
+我们会经常看到这样的代码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSRunLoop">
+<meta property="og:url" content="http://yoursite.com/2015/08/11/2015-04-23-NSRunLoop/index.html">
+<meta property="og:site_name" content="冯廉义的博客">
+<meta property="og:description" content="iPhone应用开发中关于NSRunLoop的概述是本文要介绍的内容，NSRunLoop是一种更加高明的消息处理模式，他就高明在对消息处理过程进行了更好的抽象和封装，这样才能是的你不用处理一些很琐碎很低层次的具体消息的处理，在NSRunLoop中每一个消息就被打包在input source或者是timer source中了，来看详细内容。
+1.什么是NSRunLoop
+我们会经常看到这样的代码：">
+<meta property="og:image" content="http://yoursite.com/uploads/NSRunLoop1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/NSRunLoop2.png">
+<meta property="og:updated_time" content="2015-08-11T09:17:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSRunLoop">
+<meta name="twitter:description" content="iPhone应用开发中关于NSRunLoop的概述是本文要介绍的内容，NSRunLoop是一种更加高明的消息处理模式，他就高明在对消息处理过程进行了更好的抽象和封装，这样才能是的你不用处理一些很琐碎很低层次的具体消息的处理，在NSRunLoop中每一个消息就被打包在input source或者是timer source中了，来看详细内容。
+1.什么是NSRunLoop
+我们会经常看到这样的代码：">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> NSRunLoop | 冯廉义的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0d85e8093977b9246c49a6158ac7109f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">冯廉义的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            <i class="menu-item-icon icon-next-search"></i> <br />
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '3SC5Rp5xxZCR9fwiG3gr','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              NSRunLoop
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-11T17:17:22+08:00" content="2015-08-11">
+            2015-08-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/iOS/" itemprop="url" rel="index">
+                  <span itemprop="name">iOS</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/08/11/2015-04-23-NSRunLoop/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-04-23-NSRunLoop/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>iPhone应用开发中关于NSRunLoop的概述是本文要介绍的内容，NSRunLoop是一种更加高明的消息处理模式，他就高明在对消息处理过程进行了更好的抽象和封装，这样才能是的你不用处理一些很琐碎很低层次的具体消息的处理，在NSRunLoop中每一个消息就被打包在input source或者是timer source中了，来看详细内容。</p>
+<p>1.什么是NSRunLoop</p>
+<p>我们会经常看到这样的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">IBAction</span>)start:(<span class="keyword">id</span>)sender  </span><br><span class="line"> </span><br><span class="line">&#123;  </span><br><span class="line"> </span><br><span class="line">pageStillLoading = <span class="literal">YES</span>;  </span><br><span class="line"> </span><br><span class="line">[<span class="built_in">NSThread</span> detachNewThreadSelector:<span class="keyword">@selector</span>(loadPageInBackground:)toTarget:<span class="keyword">self</span> withObject:<span class="literal">nil</span>];  </span><br><span class="line"> </span><br><span class="line">[progress setHidden:<span class="literal">NO</span>];  </span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> (pageStillLoading) &#123;  </span><br><span class="line"> </span><br><span class="line">[<span class="built_in">NSRunLoop</span> currentRunLoop] runMode:<span class="built_in">NSDefaultRunLoopMode</span> beforeDate:[<span class="built_in">NSDate</span> distantFuture]];  </span><br><span class="line"> </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">[progress setHidden:<span class="literal">YES</span>];  </span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码很神奇的，因为他会“暂停”代码运行，而且程序运行不会因为这里有一个while循环而受到影响。在[progress setHidden:NO]执行之后，整个函数想暂停了一样停在循环里面，等loadPageInBackground里面的操作都完成了以后才让[progress setHidden:YES]运行。这样做就显得简介，而且逻辑很清晰。如果你不这样做，你就需要在loadPageInBackground里面表示load完成的地方调用[progress setHidden:YES]，显得代码不紧凑而且容易出错。<br>[iGoogle有话说:应用程序框架主线程已经封装了对NSRunLoop runMode:beforeDate:的调用;它和while循环构成了一个消息泵,不断获取和处理消息;可能大家会比较奇怪,既然主线程中已经封装好了对NSRunLoop的调用,为什么这里还可以再次调用,这个就是它与Windows消息循环的区别,它可以嵌套调用.当再次调用while+NSRunLoop时候程序并没有停止执行,它还在不停提取消息/处理消息.这一点与Symbian中Active Scheduler的嵌套调用达到同步作用原理是一样的.]</p>
+<p>那么具体什么是NSRunLoop呢？其实NSRunLoop的本质是一个消息机制的处理模式。如果你对vc++编程有一定了解，在windows中，有一系列很重要的函数SendMessage，PostMessage，GetMessage，这些都是有关消息传递处理的API。</p>
+<p>但是在你进入到Cocoa的编程世界里面，我不知道你是不是走的太快太匆忙而忽视了这个很重要的问题，Cocoa里面就没有提及到任何关于消息处理的API，开发者从来也没有自己去关心过消息的传递过程，好像一切都是那么自然，像大自然一样自然？在Cocoa里面你再也不用去自己定义WM_COMMAD_XXX这样的宏来标识某个消息，也不用在switch-case里面去对特定的消息做特别的处理。难道是Cocoa里面就没有了消息机制？答案是否定的，只是Apple在设计消息处理的时候采用了一个更加高明的模式，那就是RunLoop。</p>
+<ol>
+<li>NSRunLoop工作原理</li>
+</ol>
+<p>接下来看一下NSRunLoop具体的工作原理，首先是官方文档提供的说法，看图：</p>
+<p><img src="/uploads/NSRunLoop1.png" alt="NSRunLoop1 text"></p>
+<p>通过所有的“消息”都被添加到了NSRunLoop中去，而在这里这些消息并分为“input source”和“Timer source” 并在循环中检查是不是有事件需要发生，如果需要那么就调用相应的函数处理。为了更清晰的解释，我们来对比VC++和iOS消息处理过程。</p>
+<p>VC++中在一切初始化都完成之后程序就开始这样一个循环了（代码是从户sir mfc程序设计课程的slides中截取）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> APIENTRY <span class="title">WinMain</span><span class="params">(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR  lpCmdLine,<span class="keyword">int</span> nCmdShow)</span></span>&#123;  </span><br><span class="line"> </span><br><span class="line">...  </span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> (GetMessage(&amp;msg, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>))&#123;  </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> (!TranslateAccelerator(msg.hwnd, hAccelTable, &amp;msg))&#123;  </span><br><span class="line"> </span><br><span class="line">TranslateMessage(&amp;msg);  </span><br><span class="line"> </span><br><span class="line">DispatchMessage(&amp;msg);  </span><br><span class="line"> </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到在GetMessage之后就去分发处理消息了，而iOS中main函数中只是调用了UIApplicationMain，那么我们可以介意猜出UIApplicationMain在初始化完成之后就会进入这样一个情形：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">int</span> <span class="tag">UIApplicationMain</span>(...)&#123;  </span><br><span class="line"> </span><br><span class="line">...  </span><br><span class="line"> </span><br><span class="line"><span class="tag">while</span>(running)&#123;  </span><br><span class="line"> </span><br><span class="line"><span class="attr_selector">[NSRunLoop currentRunLoop]</span> <span class="tag">runMode</span><span class="pseudo">:NSDefaultRunLoopMode</span> <span class="tag">beforeDate</span>:<span class="attr_selector">[NSDate distantFuture]</span>];  </span><br><span class="line"> </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">...  </span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以在UIApplicationMain中也是同样在不断处理runloop才是的程序没有退出。刚才的我说了NSRunLoop是一种更加高明的消息处理模式，他就高明在对消息处理过程进行了更好的抽象和封装，这样才能是的你不用处理一些很琐碎很低层次的具体消息的处理，在NSRunLoop中每一个消息就被打包在input source或者是timer source中了，当需要处理的时候就直接调用其中包含的相应对象的处理函数了。</p>
+<p>所以对外部的开发人员来讲，你感受到的就是，把source/timer加入到runloop中，然后在适当的时候类似于[receiver action]这样的事情发生了。甚至很多时候，你都没有感受到整个过程前半部分，你只是感觉到了你的某个对象的某个函数调用了。</p>
+<p>比如在UIView被触摸时会用touchesBegan/touchesMoved等等函数被调用，也许你会想，“该死的，我都不知道在那里被告知有触摸消息，这些处理函数就被调用了！？”所以，消息是有的，只是runloop已经帮你做了！为了证明我的观点，我截取了一张debug touchesBegan的call stack，如图：</p>
+<p><img src="/uploads/NSRunLoop2.png" alt="NSRunLoop2 text"></p>
+<p>利用NSRunLoop阻塞NSOperation线程<br>在使用NSOperationQueue简化多线程开发中介绍了多线程的开发，我这里主要介绍一下使用NSRunLoop阻塞线程。<br>主要使用在NStimer定时启用的任务或者异步获取数据的情况如socket获取网络数据，要阻塞线程，直到获取数据之后在释放线程。<br>下面是线程中没有使用NSRunLoop阻塞线程的代码和执行效果：<br>线程类：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span> </span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyTask</span> : <span class="title">NSOperation</span> </span>&#123;     </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"MyTask.h"</span> </span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MyTask</span> </span></span><br><span class="line">-(<span class="keyword">void</span>)main     </span><br><span class="line">&#123;      </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"开始线程=%@"</span>,<span class="keyword">self</span>);      </span><br><span class="line">    [<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">2</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(hiandeTime:) userInfo:<span class="literal">nil</span> repeats:<span class="literal">NO</span>];      </span><br><span class="line">&#125;      </span><br><span class="line">-(<span class="keyword">void</span>)hiandeTime:(<span class="keyword">id</span>)sender      </span><br><span class="line">&#123;      </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"执行了NSTimer"</span>);      </span><br><span class="line">&#125;      </span><br><span class="line">-(<span class="keyword">void</span>)dealloc      </span><br><span class="line">&#123;      </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"delloc mytask=%@"</span>,<span class="keyword">self</span>);      </span><br><span class="line">    [<span class="keyword">super</span> dealloc];      </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>线程添加到队列中：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad     </span><br><span class="line">&#123;      </span><br><span class="line">    <span class="comment">[super viewDidLoad]</span>;      </span><br><span class="line">    NSOperationQueue *queue=<span class="comment">[<span class="comment">[NSOperationQueue alloc]</span> init]</span>;      </span><br><span class="line">    MyTask *myTask=<span class="comment">[<span class="comment">[<span class="comment">[MyTask alloc]</span> init]</span> autorelease]</span>;      </span><br><span class="line">    <span class="comment">[queue addOperation:myTask]</span>;      </span><br><span class="line">    MyTask *myTask1=<span class="comment">[<span class="comment">[<span class="comment">[MyTask alloc]</span> init]</span> autorelease]</span>;      </span><br><span class="line">    <span class="comment">[queue addOperation:myTask1]</span>;      </span><br><span class="line">    MyTask *myTask2=<span class="comment">[<span class="comment">[<span class="comment">[MyTask alloc]</span> init]</span> autorelease]</span>;      </span><br><span class="line">    <span class="comment">[queue addOperation:myTask2]</span>;      </span><br><span class="line">    <span class="comment">[queue release]</span>;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.393</span> OperationDemo[<span class="number">20676</span>:<span class="number">1803</span>] 开始线程=&lt;MyTask: <span class="number">0x4b4dea0</span>&gt;   </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.393</span> OperationDemo[<span class="number">20676</span>:<span class="number">5</span>d03] 开始线程=&lt;MyTask: <span class="number">0x4b50db0</span>&gt;    </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.396</span> OperationDemo[<span class="number">20676</span>:<span class="number">1803</span>] 开始线程=&lt;MyTask: <span class="number">0x4b51070</span>&gt;    </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.404</span> OperationDemo[<span class="number">20676</span>:<span class="number">6303</span>] delloc mytask=&lt;MyTask: <span class="number">0x4b4dea0</span>&gt;    </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.404</span> OperationDemo[<span class="number">20676</span>:<span class="number">5</span>d03] delloc mytask=&lt;MyTask: <span class="number">0x4b50db0</span>&gt;    </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">09</span>:<span class="number">44</span>:<span class="number">45.405</span> OperationDemo[<span class="number">20676</span>:<span class="number">6303</span>] delloc mytask=&lt;MyTask: <span class="number">0x4b51070</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，根本没有执行NSTimer中的方法，线程就释放掉了，我们要执行<br>NSTimer中的方法，就要利用NSRunLoop阻塞线程。下面是修改后的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)main     </span><br><span class="line">&#123;      </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"开始线程=%@"</span>,<span class="keyword">self</span>);      </span><br><span class="line">    <span class="built_in">NSTimer</span> *timer=[<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">2</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(hiandeTime) userInfo:<span class="literal">nil</span> repeats:<span class="literal">NO</span>];      </span><br><span class="line">    [timer fire];      </span><br><span class="line">    <span class="keyword">while</span> (!didDisconnect) &#123;      </span><br><span class="line">        [[<span class="built_in">NSRunLoop</span> currentRunLoop] runMode:<span class="built_in">NSDefaultRunLoopMode</span> beforeDate:[<span class="built_in">NSDate</span> distantFuture]];      </span><br><span class="line">    &#125;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.543</span> OperationDemo[<span class="number">21270</span>:<span class="number">1803</span>] 开始线程=&lt;MyTask: <span class="number">0x4d16380</span>&gt;     </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.543</span> OperationDemo[<span class="number">21270</span>:<span class="number">5</span>d03] 开始线程=&lt;MyTask: <span class="number">0x4d17790</span>&gt;      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.550</span> OperationDemo[<span class="number">21270</span>:<span class="number">6303</span>] 开始线程=&lt;MyTask: <span class="number">0x4d17a50</span>&gt;      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.550</span> OperationDemo[<span class="number">21270</span>:<span class="number">1803</span>] 执行了NSTimer      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.551</span> OperationDemo[<span class="number">21270</span>:<span class="number">5</span>d03] 执行了NSTimer      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.552</span> OperationDemo[<span class="number">21270</span>:<span class="number">6303</span>] 执行了NSTimer      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.556</span> OperationDemo[<span class="number">21270</span>:<span class="number">6503</span>] delloc mytask=&lt;MyTask: <span class="number">0x4d16380</span>&gt;      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.557</span> OperationDemo[<span class="number">21270</span>:<span class="number">6303</span>] delloc mytask=&lt;MyTask: <span class="number">0x4d17790</span>&gt;      </span><br><span class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">25</span> <span class="number">10</span>:<span class="number">07</span>:<span class="number">00.557</span> OperationDemo[<span class="number">21270</span>:<span class="number">5</span>d03] delloc mytask=&lt;MyTask: <span class="number">0x4d17a50</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>我们可以使用NSRunLoop进行线程阻塞。</p>
+<p>使用runloop阻塞线程的正确写法</p>
+<p>Runloop可以阻塞线程，等待其他线程执行后再执行。</p>
+<p>比如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span>&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">– (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad]; </span><br><span class="line">    <span class="built_in">NSLog</span>(@”start new thread …”);</span><br><span class="line">    [<span class="built_in">NSThread</span> detachNewThreadSelector:<span class="keyword">@selector</span>(runOnNewThread) toTarget:<span class="keyword">self</span> withObject:<span class="literal">nil</span>];    </span><br><span class="line">    <span class="keyword">while</span> (!end) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(@”runloop…”);</span><br><span class="line">        [[<span class="built_in">NSRunLoop</span> currentRunLoop] runMode:<span class="built_in">NSDefaultRunLoopMode</span> beforeDate:[<span class="built_in">NSDate</span> distantFuture]];</span><br><span class="line">        <span class="built_in">NSLog</span>(@”runloop end.”);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(@”ok.”);</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)runOnNewThread&#123;</span><br><span class="line">     <span class="built_in">NSLog</span>(@”run <span class="keyword">for</span> new thread …”);</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    end=<span class="literal">YES</span>;</span><br><span class="line">    <span class="built_in">NSLog</span>(@”end.”);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这样做，运行时会发现，while循环后执行的语句会在很长时间后才被执行。</p>
+<p>那是不是可以这样：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]</span>;</span><br></pre></td></tr></table></figure>
+<p>缩短runloop的休眠时间，看起来解决了上面出现的问题。</p>
+<p>不过这样也又问题，runloop对象被经常性的唤醒，这违背了runloop的设计初衷。runloop的作用就是要减少cpu做无谓的空转，cpu可在空闲的时候休眠，以节约电量。</p>
+<p>那么怎么做呢？正确的写法是：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)runOnNewThread&#123;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">NSLog</span>(@”run <span class="keyword">for</span> new thread …”);</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    [<span class="keyword">self</span> performSelectorOnMainThread:<span class="keyword">@selector</span>(setEnd) withObject:<span class="literal">nil</span> waitUntilDone:<span class="literal">NO</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(@”end.”);</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)setEnd&#123;</span><br><span class="line">    end=<span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>见黑体斜体字部分，要将直接设置变量，改为向主线程发送消息，执行方法。问题得到解决。</p>
+<p>这里要说一下，造成while循环后语句延缓执行的原因是，runloop未被唤醒。因为，改变变量的值，runloop对象根本不知道。延缓的时长总是不定的，这是因为，有其他事件在某个时点唤醒了主线程，这才结束了while循环。那么，向主线程发送消息，将唤醒runloop，因此问题就解决了。</p>
+<p>NSRunLoop  runMode:<br>NSDefaultRunLoopMode/NSRunLoopCommonModes</p>
+<p>eg.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[NSRunLoopcurrentRunLoop]</span> <span class="rule"><span class="attribute">addTimer</span>:<span class="value">timer forMode:NSRunLoopCommonModes]</span></span>; </span><br><span class="line">  <span class="attr_selector">[[NSRunLoop currentRunLoop]</span> <span class="rule"><span class="attribute">runMode</span>:<span class="value">NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]</span></span>;</span><br></pre></td></tr></table></figure>
+<p>CFRunLoop学习</p>
+<p>from CFRunLoop Reference</p>
+<p>CFRunLoop monitors sources of input to a task and dispatches control when they become ready for processing.</p>
+<p>Examples of input source might include user input devices,network connection,periodic or timed-delay events,and asynchronous callbacks.</p>
+<p>Three types of objects can be monitored by a run loop:</p>
+<p>sources(CFRunLoopSource)</p>
+<p>timers(CFRunLoopTimer)</p>
+<p>observers(CFRunLoopObserver)</p>
+<p>Each sources,times or observers added to a run loop must be associated with one or more run loop modes.</p>
+<p>There is exactly one run loop per thread.</p>
+<p>RunLoop 是事件循环，用于schedule work 和协调输入事件.</p>
+<p>RunLoop 接受2种不同的事件源，input sources （异步事件）和 timer sources（同步事件）</p>
+<p>何时使用RunLoop？</p>
+<p>1.使用ports或自定义输入源 与其他线程通讯</p>
+<p>2.在线程中使用定时器</p>
+<p>3.在程序中使用performSelector等方法</p>
+<p>4.让线程周期性执行某个任务</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-NSRunLoop/" rel="tag">#iOS NSRunLoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/11/2014-08-03-general-mac-resources/" rel="prev">Mac 常用资源</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/11/2015-2-26-Background_Voip_Socket-iOS/" rel="next">GCDAsyncSocket background VOIP</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/08/11/2015-04-23-NSRunLoop/"
+                   data-title="NSRunLoop" data-url="http://yoursite.com/2015/08/11/2015-04-23-NSRunLoop/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/xiaomai.jpg" alt="Fly" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Fly</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">括弧笑</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fly</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"fenglianyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="iOS Xcode," />
 
 
 
@@ -37,19 +37,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="从sdk3.2.5升级到sdk 7.1中间废弃了很多的方法，还有一些逻辑关系更加严谨了。1，警告：“xoxoxoxo”  is deprecated解决办法：查看xoxoxoxo的这个方法的文档，替换掉这个方法即可。
+2，警告：Declaration of “struct sockaddr” will not be visible outside of this function解决办法：在你的开">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2015/08/10/hello-world/index.html">
+<meta property="og:title" content="升级到 Xcode6以后出现错误、警告解决办法">
+<meta property="og:url" content="http://yoursite.com/2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/index.html">
 <meta property="og:site_name" content="冯廉义的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-08-10T09:37:17.000Z">
+<meta property="og:description" content="从sdk3.2.5升级到sdk 7.1中间废弃了很多的方法，还有一些逻辑关系更加严谨了。1，警告：“xoxoxoxo”  is deprecated解决办法：查看xoxoxoxo的这个方法的文档，替换掉这个方法即可。
+2，警告：Declaration of “struct sockaddr” will not be visible outside of this function解决办法：在你的开">
+<meta property="og:updated_time" content="2015-08-10T06:36:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="升级到 Xcode6以后出现错误、警告解决办法">
+<meta name="twitter:description" content="从sdk3.2.5升级到sdk 7.1中间废弃了很多的方法，还有一些逻辑关系更加严谨了。1，警告：“xoxoxoxo”  is deprecated解决办法：查看xoxoxoxo的这个方法的文档，替换掉这个方法即可。
+2，警告：Declaration of “struct sockaddr” will not be visible outside of this function解决办法：在你的开">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +59,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | 冯廉义的博客 </title>
+  <title> 升级到 Xcode6以后出现错误、警告解决办法 | 冯廉义的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +208,7 @@ Quick">
           
           
             
-              Hello World
+              升级到 Xcode6以后出现错误、警告解决办法
             
           
         </h1>
@@ -217,19 +217,34 @@ Quick">
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-10T17:37:17+08:00" content="2015-08-10">
-            2015-08-10
+          <time itemprop="dateCreated" datetime="2015-08-11T17:03:03+08:00" content="2015-08-11">
+            2015-08-11
           </time>
         </span>
 
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/iOS/" itemprop="url" rel="index">
+                  <span itemprop="name">iOS</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
         
 
         
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/10/hello-world/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/10/hello-world/" itemprop="commentsCount"></span>
+              <a href="/2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -243,31 +258,79 @@ Quick">
       
 
       
-        <span itemprop="articleBody"><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <span itemprop="articleBody"><p>从sdk3.2.5升级到sdk 7.1中间废弃了很多的方法，还有一些逻辑关系更加严谨了。<br>1，警告：“xoxoxoxo”  is deprecated<br>解决办法：查看xoxoxoxo的这个方法的文档，替换掉这个方法即可。</p>
+<p>2，警告：Declaration of “struct sockaddr” will not be visible outside of this function<br>解决办法：在你的开源.m文件中添加 #import</p>
+<p>3，警告：Implicit conversion from enumeration type ‘UIInterfaceOrientation’ to different enumeration type ‘UIDeviceOrientation’<br>解决办法：类型不匹配。跳到出错的那一行，UIInterfaceOrientation强制转换为UIDeviceOrientation就行了。</p>
+<p>4，警告：incompatible pointer types assigning to ‘MyArrayList<em>‘from ‘NSMutableArray’<br>解决办法：加入强制转换(MyArrayList</em>)</p>
+<p>5，警告：’&amp;&amp;’ within ‘||’<br>问题出处：<br>if (exists &amp;&amp; !isDirectory || !exists)………<br>解决办法： if ((exists &amp;&amp; !isDirectory) || !exists)………</p>
+<p>6，警告：Warning：The Copy Bundle Resources build phase contains this target’s Info.plist file<br>解决办法：将Info.plist文件移到Resources目录下，而不要直接放在target下。</p>
+<p>7，警告：在使用ASIHttp…第三方库的，运行报错。<br>解决办法：看你的项目中是否添加CFNetwork.framework、SystemConfiguration.framework, MobileCoreServices.framework,<br>CoreGraphics.framework和libz.1.2.3.dylib，如果是sdk5.0以上，改添加libz.1.2.5.dylib</p>
+<p>8，警告：xxxooo，missing required architecture i386 in file<br>解决办法：如果是错误信息的话：Target-&gt;Build Settings-&gt;Search Paths, 删除FrameworkSearch Paths 里面内容就可以了。<br>要只是一个警告的话，真机调试可以过。具体解决方法待大神出现。</p>
+<p>9，警告：<br>clang: error: no such file or directory: ‘/demo2/控件代码/13/Recorder/Recorder_Prefix.pch’<br>clang: error: no input files<br>Command /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang failed with exit code 1<br>解决办法： 在你的主工程文件 target搜素，pch ，找到Prefix Header    把它后面的值，都删除，再运行就解决了。</p>
+<p>10，警告：<br>“ARC forbids synthesizing a property of an Objective-C object with unspecified ownership or storage attribute<br>解决办法：如果定义了ARC有效，那么必须要有所有者属性的定义;所以代码改成下面这样<br>@property (nonatomic, strong, readonly) NSString *ss;<br>11，警告：<br>io6一下的xib系统均没有自动选择Use Autolayout， Supporting iOS 5 and below with xib of iOS 6<br>解决办法：Just un-select “Use Autolayout” in the file inspector of the xib’s view and we are back to the familiar autosizing in size inspector and boom, it supports iOS 5 and below.</p>
+<p>12，警告：<br>    Warning: Multiple build commands for output file xxx.png<br>解决办法：找到项目里xxx.png重复，删除重复的资源。</p>
+<p>//以下是升级到 xcode 5.0.1 之后使用遇到的警告<br>13，警告：<br>“iOS 模拟器”未能安装此应用程序。<br>解决办法：删除模拟器上当前要运行那个APP，重新运行项目。就ok</p>
+<p>14，警告：<br>SpringBoard无法启动应用程序 错误:-3<br>解决办法：退出模拟器，重新运行这个项目。</p>
+<p>15，警告：<br>    The server certificate failed to verify.<br>解决办法：<br>1、打开终端（实用工具 –&gt;终端），在终端中输入如下命令：<br>svn ls <a href="https://192.100.1.11?0/svn/xxxxxx（注意下面的url更换成你自己的url地址）" target="_blank" rel="external">https://192.100.1.11?0/svn/xxxxxx（注意下面的url更换成你自己的url地址）</a><br>然后直接输入 “ p ”  确认，就可以重新连接了。</p>
+<p>16，警告：<br>Bitmasking for introspection of Objective-C object pointers is strongly discouraged.<br>解决办法：<br>某数字&amp; 0x1的时候是代表要取最低位是否为1，改成了  if(JK_EXPECT_F(((NSUInteger)object)%2))即可。</p>
+<p>17，警告：<br>Implicit conversion loses integer precision: ‘unsigned long’ to ‘CC_LONG’ (aka ‘unsigned int’).<br>解决办法：<br>CC_MD5(str,strlen(str), r);，改成了     CC_MD5(str, (CC_LONG)strlen(str), r);即可。</p>
+<p>18，警告：<br>error: failed to launch ‘/private/var/mobile/Applications/xxxxx’ – failed to get the task for process 11140.<br>解决办法：<br>重启你的开发手机即可，还有一种可能是你的开发者证书与发布证书搞错了，检查在xcode中证书是否一直 。</p>
+<p>遇到相关的警告，一般编译器都会提供解决方案，所以，作为新手，我们应该看懂编译器给我们的提示，这样我们解决问题就会事半功倍。</p>
+<p>1，  错误信息：<br>“_OBJC<em>CLASS</em>; xxxxx  “, referenced from:<br>objc-class-ref in ViewController.o<br>ld: symbol(s) not found for architecture i386<br>clang: error: linker command failed with exit code 1 (use -v to see invocation)<br>解决方法：<br>查看工程，看是不是没有导入相关的框架。或者工程里添加的有相同”.m”,”.h” 文件</p>
+<p>2，  错误信息：<br>Couldn’t register dy.CKRiLiText with the bootstrap server. Error: unknown error code.<br>This generally means that another instance of this process was already running or is hung in the debugger.Current language:  auto; currently objective-c<br>解决方法： 可能是电脑内存问题引起，重启电脑即可解决。如果重启解决不了问题，那就是你刚刚改动的代码引起的问题。</p>
+<p>3 、 错误信息：<br>ios 5是调试正常的，ios 6真机调试的时候,出现如下错误：ld: file is universal (3 slices) but does not contain a(n) armv7s slice: /Users/mac4/Desktop/my desktop/My app/MyApp name 20:09:12  /MyApp name/ZBarSDK/libzbar.a for architecture armv7serror: linker command failed with exit code 1 (use -v to see invocation)<br>解决方法：在Xcode里，点击相应的Target，然后点Build Settings，找到VALID_ARCHS，看里面的是不是arvm7s，如果不是改成arvm7s就可以了。</p>
+<p>4 、 错误信息：<br>error: receiver type ‘ViewController’ for instance message does not declare a method with selector ‘hideSearchBar:’ [4]<br>ViewController 中没有声明一个方法选择’hideSearchBar：<br>解决方法：<br>在ViewController .h 中声明一下这个方法 “ hideSearchBar ”  即可。</p>
+<p>5、 错误信息：当json从服务端请求时得到的字符串，如果这样写的话，会报错，’;’ after top level declarator<br>NSString <em>ss= @”{“recommend”:”世界末日”,”dogname”:”机器人”}”;<br>解决方法：<br>就是，把   “   替换成  \”  即可。NSString </em>ss= @”{ \”recommend \”: \”世界末日 \”,\”dogname \”: \”机器人 \”}”;</p>
+<p>6 、 错误信息：<br>error: Existing instance variable ‘_datasource’ for property ‘datasource’ with  assign attribute must be __unsafe_unretained</p>
+<p>解决方法：<br>id _datasource; 改为     __unsafe_unretained id _datasource:即可</p>
+<p>31，警告：<br>warning: Semantic Issue: Incompatible integer to pointer conversion assigning to ‘BOOL <em>‘ (aka ‘signed char </em>‘) from ‘BOOL’ (aka ‘signed char’)</p>
+<p>解决办法： 检查 BOOL ＊换为BOOL就可以了，检查是不是多写一个   ＊  号。</p>
+<p>32:Jsonkit中的警告</p>
+<p>Direct access to objective-c’s isa is deprecated in favor of object_setClass() and object_getClass()<br>object-&gt;isa 替换为 object_getClass(object)<br>keyObject-&gt;isa 替换为 object_getClass(keyObject)<br>(id)keys[idx]-&gt;isa 替换为 object_getClass((id)keys[idx])</p>
+<p>format specifies type ‘unsigned long’ but the argument has type ‘nsuinteger’ (aka ‘unsigned int’)<br>给变量增加(unsigned long)进行类型转换</p>
+<p>33：md5加密（iOS SDK中自带了CommonCrypto</p>
+<p>Implicit declaration of function ‘CC_MD5’ is invalid in C99</p>
+<p>#define CC_MD5_DIGEST_LENGTH 16<br>+(NSString <em>)MD5HashForString:(NSString </em>)input {<br>const char *cStr = [input UTF8String];<br>unsigned char result[CC_MD5_DIGEST_LENGTH];<br>CC_MD5(cStr, strlen(cStr), result);<br>return [NSString stringWithFormat: @”xxxxxxxxxxxxxxxx”,<br>result[0], result[1], result[2], result[3],<br>result[4], result[5], result[6], result[7],<br>result[8], result[9], result[10], result[11],<br>result[12], result[13], result[14], result[15]];<br>}</p>
+<p>引入函数定义的头文件</p>
+<p>#import</p>
+<p>34:ASIDataDecompressor中的警告</p>
+<p>format specifies type  ‘short’ but the  argument has type ‘int’</p>
+<p>在+ (NSError <em>)deflateErrorWithCode:(int)code 和 +(NSError </em>)inflateErrorWithCode:(int)code中</p>
+<p>［NSString stringWithFormat:@”Compression of data failed with code %hi”,code] 中</p>
+<p>将code改为 (short)code,类型转换</p>
+<p>35：Reachability中警告</p>
+<p>Using ‘stringWithString:’ with a literal is redundant</p>
+<p>statusString = [NSString stringWithString: @”Not Reachable”];</p>
+<p>改为：statusString = @”Not Reachable”;</p>
+<p>36.format specifies type ‘id’ but the argument has type ‘const char *’</p>
+<p>NSCAssert(NO, @”Unhandled error encountered during SAX parse. msg is %@”, msg);<br>改为：NSCAssert(NO, @”Unhandled error encountered during SAX parse. msg is %@”, [NSString stringWithUTF8String:msg]);</p>
+<p>37 Using ‘stringWithString:’ with a literal is redundant<br>改为：self.locationInput.text = @”captured change”;</p>
+<p>38 在项目中设置控件的layer属性时，会发生错误,<br>“Property ‘c’ cannot be found in forward class object ‘CALayer *”,</p>
+<p>这时需要引入  #import 。</p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Xcode/" rel="tag">#iOS Xcode</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/11/2014-09-15-general-git-resources/" rel="prev">Git 常用资源</a>
+              <a href="/2015/08/11/2015-02-06-general-iOS-selfsuper/" rel="prev">Self Super</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/11/2015-3-27-gitpush/" rel="next">Git push</a>
             
           </div>
         </div>
@@ -296,8 +359,8 @@ Quick">
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/08/10/hello-world/"
-                   data-title="Hello World" data-url="http://yoursite.com/2015/08/10/hello-world/">
+              <div class="ds-thread" data-thread-key="2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/"
+                   data-title="升级到 Xcode6以后出现错误、警告解决办法" data-url="http://yoursite.com/2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/">
               </div>
             
           </div>
@@ -379,7 +442,7 @@ Quick">
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick_Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create_a_new_post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run_server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate_static_files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy_to_remote_sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

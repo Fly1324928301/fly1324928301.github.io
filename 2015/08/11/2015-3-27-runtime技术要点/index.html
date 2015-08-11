@@ -1,0 +1,741 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="括弧笑" />
+
+
+
+  <meta name="keywords" content="iOS runtime," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Objectivec的runtime技术功能非常强大，能够在运行时获取并修改类的各种信息，包括获取方法列表、属性列表、变量列表，修改方法、属性，增加方法，属性等等，本文对相关的几个要点做了一个小结。
+(1)在运行时对函数进行动态替换 ： class_replaceMethod使用该函数可以在运行时动态替换某个类的函数实现，这样做有什么用呢？最起码，可以实现类似windows上hook效果，即截获系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="runtime技术要点">
+<meta property="og:url" content="http://yoursite.com/2015/08/11/2015-3-27-runtime技术要点/index.html">
+<meta property="og:site_name" content="冯廉义的博客">
+<meta property="og:description" content="Objectivec的runtime技术功能非常强大，能够在运行时获取并修改类的各种信息，包括获取方法列表、属性列表、变量列表，修改方法、属性，增加方法，属性等等，本文对相关的几个要点做了一个小结。
+(1)在运行时对函数进行动态替换 ： class_replaceMethod使用该函数可以在运行时动态替换某个类的函数实现，这样做有什么用呢？最起码，可以实现类似windows上hook效果，即截获系">
+<meta property="og:image" content="http://yoursite.com/uploads/runtimetechnicalpoints1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/runtimetechnicalpoints2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/runtimetechnicalpoints3.png">
+<meta property="og:updated_time" content="2015-08-11T09:05:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="runtime技术要点">
+<meta name="twitter:description" content="Objectivec的runtime技术功能非常强大，能够在运行时获取并修改类的各种信息，包括获取方法列表、属性列表、变量列表，修改方法、属性，增加方法，属性等等，本文对相关的几个要点做了一个小结。
+(1)在运行时对函数进行动态替换 ： class_replaceMethod使用该函数可以在运行时动态替换某个类的函数实现，这样做有什么用呢？最起码，可以实现类似windows上hook效果，即截获系">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> runtime技术要点 | 冯廉义的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0d85e8093977b9246c49a6158ac7109f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">冯廉义的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            <i class="menu-item-icon icon-next-search"></i> <br />
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '3SC5Rp5xxZCR9fwiG3gr','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              runtime技术要点
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-11T17:05:13+08:00" content="2015-08-11">
+            2015-08-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/iOS/" itemprop="url" rel="index">
+                  <span itemprop="name">iOS</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/08/11/2015-3-27-runtime技术要点/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-3-27-runtime技术要点/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Objectivec的runtime技术功能非常强大，能够在运行时获取并修改类的各种信息，包括获取方法列表、属性列表、变量列表，修改方法、属性，增加方法，属性等等，本文对相关的几个要点做了一个小结。</p>
+<h3 id="(1)在运行时对函数进行动态替换_：_class_replaceMethod">(1)在运行时对函数进行动态替换 ： class_replaceMethod</h3><pre><code>使用该函数可以在运行时动态替换某个类的函数实现，这样做有什么用呢？最起码，可以实现类似windows上hook效果，即截获系统类的某个实例函数，然后塞一些自己的东西进去，比如打个<span class="command">log</span>什么的。
+</code></pre><p>示例代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">IMP orginIMP;</span><br><span class="line"><span class="built_in">NSString</span> * MyUppercaseString(<span class="keyword">id</span> SELF, SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin uppercaseString"</span>);</span><br><span class="line">    <span class="built_in">NSString</span> *str = orginIMP (SELF, _cmd);（<span class="number">3</span>）</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"end uppercaseString"</span>);</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line">-（<span class="keyword">void</span>）testReplaceMethod</span><br><span class="line">&#123;</span><br><span class="line">      Class strcls = [<span class="built_in">NSString</span> class];</span><br><span class="line">      SEL  oriUppercaseString = <span class="keyword">@selector</span>(uppercaseString);</span><br><span class="line">      orginIMP = [<span class="built_in">NSString</span> instanceMethodForSelector:oriUppercaseString];  （<span class="number">1</span>）  </span><br><span class="line">      IMP imp2 = class_replaceMethod(strcls,oriUppercaseString,(IMP)MyUppercaseString,<span class="literal">NULL</span>);（<span class="number">2</span>）</span><br><span class="line">      <span class="built_in">NSString</span> *s = <span class="string">"hello world"</span>;</span><br><span class="line">      <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[s uppercaseString]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果为:</p>
+<figure class="highlight cal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">begin</span> uppercaseString</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span> uppercaseString</span><br><span class="line"></span><br><span class="line">HELLO WORLD</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用就是</p>
+<p>（1）得到uppercaseString这个函数的函数指针存到变量orginIMP中</p>
+<p>（2）将NSString类中的uppercaseString函数的实现替换为自己定义的MyUppercaseString</p>
+<p>（3）在MyUppercaseString中，先执行了自己的log代码，然后再调用之前保存的uppercaseString的系统实现，这样就在系统函数执行之前加入自己的东西，后面每次对NSString调用uppercaseString的时候，都会打印出log来</p>
+<p> 与class_replaceMethod相仿，class_addMethod可以在运行时为类增加一个函数。</p>
+<h3 id="（2）当某个对象不能接受某个selector时，将对该selector的调用转发给另一个对象：-_(id)forwardingTargetForSelector:(SEL)aSelector">（2）当某个对象不能接受某个selector时，将对该selector的调用转发给另一个对象：- (id)forwardingTargetForSelector:(SEL)aSelector</h3><pre><code>forwardingTargetForSelector是NSObject的函数，用户可以在派生类中对其重载,从而将无法处理的selector转发给另一个对象。还是以上面的uppercaseString为例，如果用户自己定义的CA类的对象a，没有uppercaseString这样一个实例函数，那么在不调用respondSelector的情况下，直接执行[a performSelector:@selecto<span class="string">r"uppercaseString"</span>],那么执行时一定会crash，此时，如果CA实现了forwardingTargetForSelector函数，并返回一个NSString对象，那么就相对于对该NSString对象执行了uppercaseString函数，此时就不会crash了。当然实现这个函数的目的并不仅仅是为了程序不crash那么简单，在实现装饰者模式时，也可以使用该函数进行消息转发。
+</code></pre><p>示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> @interface CA : NSObject</span><br><span class="line"> <span class="number">3</span> -(<span class="keyword">void</span>)f;</span><br><span class="line"> <span class="number">4</span> </span><br><span class="line"> <span class="number">5</span> @end</span><br><span class="line"> <span class="number">6</span> </span><br><span class="line"> <span class="number">7</span> @implementation CA</span><br><span class="line"> <span class="number">8</span> </span><br><span class="line"> <span class="number">9</span> - (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line"><span class="number">11</span> &#123;</span><br><span class="line"><span class="number">13</span>     <span class="keyword">if</span> (aSelector == @selector(uppercaseString))</span><br><span class="line"><span class="number">15</span>     &#123;</span><br><span class="line"><span class="number">17</span>         <span class="keyword">return</span> @<span class="string">"hello world"</span>;</span><br><span class="line"><span class="number">19</span>     &#125;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>测试代码：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CA <span class="keyword">*</span>a = [CA new];</span><br><span class="line"></span><br><span class="line"> NSString <span class="keyword">*</span> s = [a performSelector:<span class="comment">@selector(uppercaseString)];</span></span><br><span class="line"></span><br><span class="line">NSLog(<span class="comment">@"%@",s);</span></span><br></pre></td></tr></table></figure>
+<p>测试代码的输出为:HELLO WORLD </p>
+<p> ps:这里有个问题，CA类的对象不能接收@selector（uppercaseString），那么如果我在forwardingTargetForSelector函数中用class_addMethod给CA类增加一个uppercaseString函数，然后返回self，可行吗？经过试验，这样会crash，此时CA类其实已经有了uppercaseString函数，但是不知道为什么不能调用，如果此时new一个CA类的对象，并返回，是可以成功的。</p>
+<h3 id="(3)当某个对象不能接受某个selector时，向对象所属的类动态添加所需的selector：">(3)当某个对象不能接受某个selector时，向对象所属的类动态添加所需的selector：</h3><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="params">(BOOL)</span> resolveInstanceMethod:<span class="params">(SEL)</span>aSEL</span><br></pre></td></tr></table></figure>
+<pre><code>这个函数与forwardingTargetForSelect<span class="subst">or</span>类似，都会在对象不能接受某个<span class="keyword">select</span><span class="subst">or</span>时触发，执行起来略有差别。前者的目的主要在于给客户一个机会来向该对象添加所需的<span class="keyword">select</span><span class="subst">or</span>，后者的目的在于允许用户将<span class="keyword">select</span><span class="subst">or</span>转发给另一个对象。另外触发时机也不完全一样，该函数是个类函数，在程序刚启动，界面尚未显示出时，就会被调用。
+
+在类不能处理某个<span class="keyword">select</span><span class="subst">or</span>的情况下，如果类重载了该函数，并使用class_addMethod添加了相应的<span class="keyword">select</span><span class="subst">or</span>，并返回YES，那么后面forwardingTargetForSelect<span class="subst">or</span>就不会被调用，如果在该函数中没有添加相应的<span class="keyword">select</span><span class="subst">or</span>，那么不管返回什么，后面都会继续调用forwardingTargetForSelect<span class="subst">or</span>，如果在forwardingTargetForSelect<span class="subst">or</span>并未返回能接受该<span class="keyword">select</span><span class="subst">or</span>的对象，那么resolveInstanceMethod会再次被触发，这一次，如果仍然不添加<span class="keyword">select</span><span class="subst">or</span>，程序就会报异常
+</code></pre><p>代码示例一：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> @implementation CA</span><br><span class="line"> <span class="number">3</span> <span class="function"><span class="keyword">void</span> <span class="title">dynamicMethodIMP</span><span class="params">(id self, SEL _cmd)</span></span><br><span class="line"> 5 </span>&#123;    </span><br><span class="line"> <span class="number">7</span>      <span class="built_in">printf</span>(<span class="string">"SEL %s did not exist\n"</span>,sel_getName(_cmd));</span><br><span class="line"> <span class="number">9</span> &#125;</span><br><span class="line"><span class="number">10</span> </span><br><span class="line"><span class="number">11</span> + (BOOL) resolveInstanceMethod:(SEL)aSEL</span><br><span class="line"><span class="number">13</span> &#123;</span><br><span class="line"><span class="number">15</span>     <span class="keyword">if</span> (aSEL == @selector(t))</span><br><span class="line"><span class="number">17</span>     &#123;</span><br><span class="line"><span class="number">19</span>         class_addMethod([selfclass], aSEL, (IMP) dynamicMethodIMP, <span class="string">"v@:"</span>);</span><br><span class="line"><span class="number">21</span>         <span class="keyword">return</span> YES;</span><br><span class="line"><span class="number">23</span>     &#125;</span><br><span class="line"><span class="number">25</span>     <span class="keyword">return</span> [super resolveInstanceMethod:aSEL];</span><br><span class="line"><span class="number">27</span> &#125;</span><br><span class="line"><span class="number">28</span> </span><br><span class="line"><span class="number">29</span> @end</span><br></pre></td></tr></table></figure>
+<p>测试代码：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CA</span> * <span class="keyword">ca</span> = [<span class="keyword">CA</span> new]</span><br><span class="line"> </span><br><span class="line">[<span class="keyword">ca</span> performSelector:@selector(t)];</span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<p>   SEL t did not exist</p>
+<p>示例代码二：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CA</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">void</span> dynamicMethodIMP(<span class="keyword">id</span> <span class="keyword">self</span>, SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    printf(<span class="string">"SEL %s did not exist\n"</span>,sel_getName(_cmd));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">+ (<span class="built_in">BOOL</span>) resolveInstanceMethod:(SEL)aSEL</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span>  <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (aSelector == <span class="keyword">@selector</span>(uppercaseString))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">@"hello world"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试代码 ：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="atom">a</span> = [[<span class="name">CA</span> <span class="atom">alloc</span>]<span class="atom">init</span>];</span><br><span class="line"><span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">a</span> <span class="atom">performSelector</span>:@<span class="atom">selector</span>(<span class="atom">uppercaseString</span>)];</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>该测试代码的输出为:HELLO WORLD </p>
+<p>对于该测试代码，由于a没有uppercaseString函数，因此会触发resolveInstanceMethod，但是由于该函数并没有添加selector，因此运行时发现找不到该函数，会触发</p>
+<p>forwardingTargetForSelector函数，在forwardingTargetForSelector函数中，返回了一个NSString “hello world”，因此会由该string来执行uppercaseString函数，最终返回大写的hello world。</p>
+<p>示例代码三：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CA</span></span></span><br><span class="line"> </span><br><span class="line">+ (<span class="built_in">BOOL</span>) resolveInstanceMethod:(SEL)aSEL</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span>  <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>　测试代码：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>  <span class="atom">a</span> = [[<span class="name">CA</span> <span class="atom">alloc</span>]<span class="atom">init</span>];</span><br><span class="line"><span class="number">2</span>  <span class="name">NSLog</span>(@<span class="string">"%@"</span>,[<span class="atom">a</span> <span class="atom">performSelector</span>:@<span class="atom">selector</span>(<span class="atom">uppercaseString</span>)];</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>这段代码的执行顺序为:</p>
+<p>(1)首先在程序刚执行，AppDelegate都还没有出来时，resolveInstanceMethod就被触发，</p>
+<p><img src="/uploads/runtimetechnicalpoints1.png" alt="runtimetechnicalpoints1 text"></p>
+<p>(2)等测试代码执行时，forwardingTargetForSelector被调用</p>
+<p><img src="/uploads/runtimetechnicalpoints2.png" alt="runtimetechnicalpoints2 text"></p>
+<p>(3)由于forwardingTargetForSelector返回了nil，因此运行时还是找不到uppercaseString selector，这时又会触发resolveInstanceMethod，由于还是没有加入selector，于是会crash。</p>
+<p><img src="/uploads/runtimetechnicalpoints3.png" alt="runtimetechnicalpoints3 text"></p>
+<h3 id="(4)_使用class_copyPropertyList及property_getName获取类的属性列表及每个属性的名称">(4) 使用class_copyPropertyList及property_getName获取类的属性列表及每个属性的名称</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">u_int               count;</span><br><span class="line">objc_property_t*    properties= class_copyPropertyList([<span class="built_in">UIView</span> class], &amp;count);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count ; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* propertyName = property_getName(properties[i]);</span><br><span class="line">    <span class="built_in">NSString</span> *strName = [<span class="built_in">NSString</span>  stringWithCString:propertyName encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,strName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　以上代码获取了UIView的所有属性并打印属性名称，　输出结果为：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">skipsSubviewEnumeration</span><br><span class="line">viewTraversalMark</span><br><span class="line">viewDelegate</span><br><span class="line">monitorsSubtree</span><br><span class="line">backgroundColorSystemColorName</span><br><span class="line">gesturesEnabled</span><br><span class="line">deliversTouchesForGesturesToSuperview</span><br><span class="line"><span class="keyword">user</span>InteractionEnabled</span><br><span class="line"><span class="keyword">tag</span></span><br><span class="line">layer</span><br><span class="line">_boundsWidthVariable</span><br><span class="line">_boundsHeightVariable</span><br><span class="line">_minXVariable</span><br><span class="line">_minYVariable</span><br><span class="line">_internalConstraints</span><br><span class="line">_dependentConstraints</span><br><span class="line">_constraintsExceptingSubviewAutoresizingConstraints</span><br><span class="line">_shouldArchiveUIAppearanceTags</span><br></pre></td></tr></table></figure>
+<h3 id="(5)_使用class_copyMethodList获取类的所有方法列表">(5) 使用class_copyMethodList获取类的所有方法列表</h3><pre><code>获取到的数据是一个<span class="function"><span class="keyword">Method</span>数组，<span class="title">Method</span>数据结构中包含了函数的名称、参数、返回值等信息，以下代码以获取名称为例：</span>
+</code></pre><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">u_int               count;</span><br><span class="line"><span class="function"><span class="keyword">Method</span>*    <span class="title">methods</span>= <span class="title">class_copyMethodList</span><span class="params">([UIView <span class="keyword">class</span>], &amp;count)</span>;</span></span><br><span class="line"><span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; count ; i++)</span><br><span class="line"><span class="comment">&#123;</span><br><span class="line">    SEL name = method_getName(methods[i]);</span><br><span class="line">    NSString *strName = [NSString  stringWithCString:sel_getName(name) encoding:NSUTF8StringEncoding];</span><br><span class="line">    NSLog(@"%@",strName);</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>　　代码执行后将输出UIView所有函数的名称，具体结果略。</p>
+<pre><code>其他一些相关函数：
+</code></pre><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="class">.SEL</span> <span class="function"><span class="title">method_getName</span><span class="params">(Method m)</span></span> 由Method得到SEL</span><br><span class="line"><span class="number">2</span><span class="class">.IMP</span> <span class="function"><span class="title">method_getImplementation</span><span class="params">(Method m)</span></span>  由Method得到IMP函数指针</span><br><span class="line"><span class="number">3</span><span class="class">.const</span> char *<span class="function"><span class="title">method_getTypeEncoding</span><span class="params">(Method m)</span></span>  由Method得到类型编码信息</span><br><span class="line"><span class="number">4</span><span class="class">.unsigned</span> int <span class="function"><span class="title">method_getNumberOfArguments</span><span class="params">(Method m)</span></span>获取参数个数</span><br><span class="line"><span class="number">5</span><span class="class">.char</span> *<span class="function"><span class="title">method_copyReturnType</span><span class="params">(Method m)</span></span>  得到返回值类型名称</span><br><span class="line"><span class="number">6</span><span class="class">.IMP</span> <span class="function"><span class="title">method_setImplementation</span><span class="params">(Method m, IMP imp)</span></span>  为该方法设置一个新的实现</span><br></pre></td></tr></table></figure>
+<h3 id="（6）总结">（6）总结</h3><pre><code>总而言之，使用<span class="keyword">runtime</span>技术能做些什么事情呢？
+
+可以在运行时，在不继承也不category的情况下，为各种类（包括系统的类）做很多操作，具体包括：
+</code></pre><p>   增加<br>增加函数:class_addMethod<br>增加实例变量:class_addIvar<br>增加属性:@dynamic标签，或者class_addMethod，因为属性其实就是由getter和setter函数组成<br>增加Protocol:class<em>addProtocol (说实话我真不知道动态增加一个protocol有什么用,-</em>-!!)<br>   获取<br>获取函数列表及每个函数的信息(函数指针、函数名等等):class_getClassMethod method_getName …<br>获取属性列表及每个属性的信息:class_copyPropertyList property_getName<br>获取类本身的信息,如类名等：class_getName class_getInstanceSize<br>获取变量列表及变量信息：class_copyIvarList<br>获取变量的值<br>   替换<br>将实例替换成另一个类：object_setClass<br>将函数替换成一个函数实现：class_replaceMethod<br>直接通过char *格式的名称来修改变量的值，而不是通过变量
+　　</p>
+<p>  　　</p>
+<p>   参考资料:<br>   (1)<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html" target="_blank" rel="external">Objective-C Runtime Reference</a><br>   (2)<a href="http://www.cnblogs.com/kesalin/archive/2011/08/15/objc_method_base.html" target="_blank" rel="external">深入浅出Cocoa之消息</a><br>   (3)<a href="http://www.cnblogs.com/walaqi/archive/2012/03/13/2394038.html" target="_blank" rel="external">objective-c 编程总结（第六篇）运行时操作 - 方法交换</a><br>   (4)<a href="http://blog.csdn.net/jasonblog/article/details/7246822" target="_blank" rel="external">Runtime of Objective-C</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-runtime/" rel="tag">#iOS runtime</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/11/2015-2-26-Background_Voip_Socket-iOS/" rel="prev">GCDAsyncSocket background VOIP</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/11/2015-01-17-opensource-iOS-doubango简介/" rel="next">Doubango简介</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/08/11/2015-3-27-runtime技术要点/"
+                   data-title="runtime技术要点" data-url="http://yoursite.com/2015/08/11/2015-3-27-runtime技术要点/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/xiaomai.jpg" alt="Fly" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Fly</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">括弧笑</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#(1)在运行时对函数进行动态替换_：_class_replaceMethod"><span class="nav-number">1.</span> <span class="nav-text">(1)在运行时对函数进行动态替换 ： class_replaceMethod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）当某个对象不能接受某个selector时，将对该selector的调用转发给另一个对象：-_(id)forwardingTargetForSelector:(SEL)aSelector"><span class="nav-number">2.</span> <span class="nav-text">（2）当某个对象不能接受某个selector时，将对该selector的调用转发给另一个对象：- (id)forwardingTargetForSelector:(SEL)aSelector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#(3)当某个对象不能接受某个selector时，向对象所属的类动态添加所需的selector："><span class="nav-number">3.</span> <span class="nav-text">(3)当某个对象不能接受某个selector时，向对象所属的类动态添加所需的selector：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#(4)_使用class_copyPropertyList及property_getName获取类的属性列表及每个属性的名称"><span class="nav-number">4.</span> <span class="nav-text">(4) 使用class_copyPropertyList及property_getName获取类的属性列表及每个属性的名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#(5)_使用class_copyMethodList获取类的所有方法列表"><span class="nav-number">5.</span> <span class="nav-text">(5) 使用class_copyMethodList获取类的所有方法列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（6）总结"><span class="nav-number">6.</span> <span class="nav-text">（6）总结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fly</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"fenglianyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

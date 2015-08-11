@@ -1,0 +1,728 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="括弧笑" />
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="音视频开源库编译(ffmpeg、libsrtp、libgsm、OpenSSL、libvpx、g729、x264、OpenH264、Doubango)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频开源库编译">
+<meta property="og:url" content="http://yoursite.com/2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/index.html">
+<meta property="og:site_name" content="冯廉义的博客">
+<meta property="og:description" content="音视频开源库编译(ffmpeg、libsrtp、libgsm、OpenSSL、libvpx、g729、x264、OpenH264、Doubango)">
+<meta property="og:updated_time" content="2015-08-10T06:36:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="音视频开源库编译">
+<meta name="twitter:description" content="音视频开源库编译(ffmpeg、libsrtp、libgsm、OpenSSL、libvpx、g729、x264、OpenH264、Doubango)">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 音视频开源库编译 | 冯廉义的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0d85e8093977b9246c49a6158ac7109f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">冯廉义的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            <i class="menu-item-icon icon-next-search"></i> <br />
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '3SC5Rp5xxZCR9fwiG3gr','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              音视频开源库编译
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-11T17:03:03+08:00" content="2015-08-11">
+            2015-08-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/iOS/" itemprop="url" rel="index">
+                  <span itemprop="name">iOS</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="Preparing_the_system">Preparing the system</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="operator"><span class="keyword">update</span></span><br><span class="line">sudo yum <span class="keyword">install</span> make libtool autoconf subversion git wget libogg-devel gcc gcc-<span class="keyword">c</span>++ pkgconfig nasm</span></span><br></pre></td></tr></table></figure>
+<p>The first step is to checkout Doubango 2.0 source code:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout <span class="symbol">https:</span>/<span class="regexp">/doubango.googlecode.com/svn</span><span class="regexp">/branches/</span><span class="number">2.0</span>/doubango doubango</span><br></pre></td></tr></table></figure>
+<h3 id="Building_libsrtp">Building libsrtp</h3><p>libsrtp is optional.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/cisco/libsrtp/</span><br><span class="line"><span class="keyword">cd</span> libsrtp</span><br><span class="line">git checkout v1.<span class="number">5.0</span></span><br><span class="line">CFLAGS=<span class="string">"-fPIC"</span> ./configure --enable-pic &amp;&amp; <span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_OpenSSL">Building OpenSSL</h3><p>OpenSSL is required if you want to use the RTCWeb Breaker module or Secure WebSocket transport (WSS). OpenSSL version 1.0.1 is required if you want support for DTLS-SRTP.</p>
+<p>This section is only required if you don’t have OpenSSL installed on your system or using version prior to 1.0.1 and want to enable DTLS-SRTP.</p>
+<p>A quick way to have OpenSSL may be installing openssl-devel package but this version will most likely be outdated (prior to 1.0.1). Anyway, you can check the version like this:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl <span class="property">version</span></span><br></pre></td></tr></table></figure>
+<p>To build OpenSSL:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//www.openssl.org/source/openssl-1.0.1c.tar.gz</span></span><br><span class="line">tar -xvzf openssl-<span class="number">1.0</span><span class="number">.1</span>c.tar.gz</span><br><span class="line">cd openssl-<span class="number">1.0</span><span class="number">.1</span>c</span><br><span class="line">./config shared --prefix=/usr/local --openssldir=/usr/local/openssl &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_libspeex_and_libspeexdsp">Building libspeex and libspeexdsp</h3><p>libspeex (audio codec) an libspeexdsp (audio processing and jitter buffer) are optional. It’s highly recommended to enable libspeexdsp.</p>
+<p>You can install the devel packages:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> speex-devel</span><br></pre></td></tr></table></figure>
+<p>Or build the source by yourself:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//downloads.xiph.org/releases/speex/speex-1.2beta3.tar.gz</span></span><br><span class="line">tar -xvzf speex-<span class="number">1.2</span>beta3<span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd speex-<span class="number">1.2</span>beta3</span><br><span class="line">./configure --disable-oggtest --without-libogg &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_YASM">Building YASM</h3><p>YASM is only required if you want to enable VPX (VP8 video codec) or x264 (H.264 codec).</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz</span></span><br><span class="line">tar -xvzf yasm-<span class="number">1.2</span><span class="number">.0</span>.tar.gz</span><br><span class="line">cd yasm-<span class="number">1.2</span><span class="number">.0</span></span><br><span class="line">./configure &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_libvpx">Building libvpx</h3><p>libvpx adds support for VP8 and is optional but highly recommended if you want support for video when using Google Chrome or Mozilla Firefox.</p>
+<p>You can install the devel packages:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> libvpx-devel</span><br></pre></td></tr></table></figure>
+<p>Or build the source by yourself:</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">git</span> <span class="comment">clone</span> <span class="comment">http://git</span><span class="string">.</span><span class="comment">chromium</span><span class="string">.</span><span class="comment">org/webm/libvpx</span><span class="string">.</span><span class="comment">git</span></span><br><span class="line"><span class="comment">cd</span> <span class="comment">libvpx</span></span><br><span class="line"><span class="string">.</span><span class="comment">/configure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">realtime</span><span class="literal">-</span><span class="comment">only</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">error</span><span class="literal">-</span><span class="comment">concealment</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">examples</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">vp8</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">pic</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">shared</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">as=yasm</span></span><br><span class="line"><span class="comment">make</span> <span class="comment">&amp;&amp;</span> <span class="comment">make</span> <span class="comment">install</span></span><br></pre></td></tr></table></figure>
+<h3 id="Building_libyuv">Building libyuv</h3><p>libyuv is optional. Adds support for video scaling and chroma conversion.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> libyuv &amp;&amp; <span class="keyword">cd</span> libyuv</span><br><span class="line">svn co http:<span class="comment">//src.chromium.org/svn/trunk/tools/depot_tools . </span></span><br><span class="line">./gclient config http:<span class="comment">//libyuv.googlecode.com/svn/trunk</span></span><br><span class="line">./gclient sync &amp;&amp; <span class="keyword">cd</span> trunk</span><br><span class="line">make -j6 V=1 -r libyuv BUILDTYPE=Release</span><br><span class="line">#cp <span class="keyword">out</span>/Release/obj.target/libyuv.a /usr/<span class="keyword">local</span>/lib</span><br><span class="line">#<span class="keyword">mkdir</span> /usr/<span class="keyword">local</span>/<span class="keyword">include</span>/libyuv &amp;&amp; cp -r <span class="keyword">include</span><span class="comment">/* /usr/local/include/libyuv</span></span><br></pre></td></tr></table></figure>
+<h3 id="Building_libopus">Building libopus</h3><p>libopus is optional but highly recommended as it’s an MTI codec for WebRTC. Adds support for Opus audio codec.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//downloads.xiph.org/releases/opus/opus-1.0.2.tar.gz</span></span><br><span class="line">tar -xvzf opus-<span class="number">1.0</span><span class="number">.2</span>.tar.gz</span><br><span class="line">cd opus-<span class="number">1.0</span><span class="number">.2</span></span><br><span class="line">./configure --with-pic --enable-<span class="keyword">float</span>-approx &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_opencore-amr">Building opencore-amr</h3><p>opencore-amr is optional. Adds support for AMR audio codec.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone gi<span class="variable">t:</span>//opencore-amr.git.sourceforge.net/gitroot/opencore-amr/opencore-amr</span><br><span class="line"><span class="keyword">cd</span> opencore-amr &amp;&amp; autoreconf --install &amp;&amp; ./configure &amp;&amp; <span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_libgsm">Building libgsm</h3><p>libgsm is optional. Adds support for GSM audio codec.</p>
+<p>You can install the devel packages (recommended):</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> gsm-devel</span><br></pre></td></tr></table></figure>
+<p>Or build the source by yourself:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//www.quut.com/gsm/gsm-1.0.13.tar.gz</span></span><br><span class="line">tar -xvzf gsm-<span class="number">1.0</span>.<span class="number">13</span><span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd gsm-<span class="number">1.0</span>-pl13 &amp;&amp; make &amp;&amp; make install</span><br><span class="line"><span class="id">#cp</span> -rf ./inc<span class="comment">/* /usr/local/include</span><br><span class="line">#cp -rf ./lib<span class="comment">/* /usr/local/lib</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Building_g729">Building g729</h3><p>G729 is optional. Adds support for G.729 audio codec.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">svn co <span class="string">http:</span><span class="comment">//g729.googlecode.com/svn/trunk/ g729b</span></span><br><span class="line">cd g729b</span><br><span class="line">.<span class="regexp">/autogen.sh &amp;&amp; ./</span>configure --enable-<span class="keyword">static</span> --disable-shared &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_iLBC">Building iLBC</h3><p>iLBC is optional. Adds support for iLBC audio codec.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">svn co http:<span class="comment">//doubango.googlecode.com/svn/branches/2.0/doubango/thirdparties/scripts/ilbc</span></span><br><span class="line">cd ilbc</span><br><span class="line">wget http:<span class="comment">//www.ietf.org/rfc/rfc3951.txt</span></span><br><span class="line">awk -f extract<span class="class">.awk</span> rfc3951<span class="class">.txt</span></span><br><span class="line">./autogen<span class="class">.sh</span> &amp;&amp; ./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_x264">Building x264</h3><p>x264 is optional and adds support for H.264 video codec (requires FFmpeg).</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="keyword">ftp</span>://<span class="keyword">ftp</span>.videolan.org/pub/x264/snapshots/last_x264.tar.bz2</span><br><span class="line">tar -xvjf last_x264.tar.bz2</span><br><span class="line"><span class="comment"># the output directory may be difference depending on the version and date</span></span><br><span class="line">cd x264-snapshot-<span class="number">20121201</span>-<span class="number">2245</span></span><br><span class="line">./configure <span class="comment">--enable-shared --enable-pic &amp;&amp; make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+<h3 id="Building_FFmpeg">Building FFmpeg</h3><p>FFmpeg is optional and adds support for H.263, H.264 (requires x264) and MP4V-ES video codecs.</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">git</span> <span class="comment">clone</span> <span class="comment">git://source</span><span class="string">.</span><span class="comment">ffmpeg</span><span class="string">.</span><span class="comment">org/ffmpeg</span><span class="string">.</span><span class="comment">git</span> <span class="comment">ffmpeg</span></span><br><span class="line"><span class="comment">cd</span> <span class="comment">ffmpeg</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span> <span class="comment">grap</span> <span class="comment">a</span> <span class="comment">release</span> <span class="comment">branch</span></span><br><span class="line"><span class="comment">git</span> <span class="comment">checkout</span> <span class="comment">n1</span><span class="string">.</span><span class="comment">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span> <span class="comment">configure</span> <span class="comment">source</span> <span class="comment">code</span></span><br><span class="line"><span class="string">.</span><span class="comment">/configure</span> <span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">extra</span><span class="literal">-</span><span class="comment">cflags="</span><span class="literal">-</span><span class="comment">fPIC"</span> <span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">extra</span><span class="literal">-</span><span class="comment">ldflags="</span><span class="literal">-</span><span class="comment">lpthread"</span> <span class="comment">\</span></span><br><span class="line"><span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">pic</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">memalign</span><span class="literal">-</span><span class="comment">hack</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">pthreads</span> <span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">shared</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">static</span> <span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">network</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">pthreads</span> <span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">ffmpeg</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">ffplay</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">ffserver</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">ffprobe</span> <span class="comment">\</span></span><br><span class="line"><span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">gpl</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">nonfree</span> <span class="comment">\</span></span><br><span class="line"><span class="comment">\</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">disable</span><span class="literal">-</span><span class="comment">debug</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span> <span class="comment">to</span> <span class="comment">force</span> <span class="comment">enabling</span> <span class="comment">h264</span><span class="string">,</span> <span class="comment">append</span> <span class="comment">to</span> <span class="comment">the</span> <span class="comment">configure</span> <span class="comment">command:</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">libx264</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">encoder=libx264</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">decoder=h264</span></span><br><span class="line"><span class="comment">#</span> <span class="comment">to</span> <span class="comment">force</span> <span class="comment">enabling</span> <span class="comment">h263</span> <span class="comment">and</span> <span class="comment">h263</span><span class="literal">+</span><span class="string">,</span> <span class="comment">append</span> <span class="comment">to</span> <span class="comment">the</span> <span class="comment">configure</span> <span class="comment">command:</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">encoder=h263</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">encoder=h263p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">decoder=h263</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span> <span class="comment">build</span> <span class="comment">and</span> <span class="comment">install</span></span><br><span class="line"><span class="comment">make</span> <span class="comment">&amp;&amp;</span> <span class="comment">make</span> <span class="comment">install</span></span><br></pre></td></tr></table></figure>
+<h3 id="Building_OpenH264">Building OpenH264</h3><p>OpenH264 is optional. Adds support for H.264 constrained baseline video codec.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/cisco/openh264.git</span><br><span class="line"><span class="keyword">cd</span> openh264</span><br><span class="line">git checkout v1.<span class="number">1</span></span><br><span class="line"><span class="keyword">make</span> ENABLE64BIT=Yes # Use ENABLE64BIT=No <span class="keyword">for</span> <span class="number">32</span>bit platforms</span><br><span class="line"><span class="keyword">make</span> install</span><br></pre></td></tr></table></figure>
+<h3 id="Building_Doubango">Building Doubango</h3><ul>
+<li>Minimal build</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> doubango &amp;&amp; ./autogen.<span class="keyword">sh</span> &amp;&amp; ./configure --with-ssl --with-srtp --with-speexdsp</span><br><span class="line"> <span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Recommended build</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd doubango &amp;&amp; ./autogen.sh &amp;&amp; ./configure --<span class="keyword">with</span>-ssl --<span class="keyword">with</span>-srtp --<span class="keyword">with</span>-speexdsp --<span class="keyword">with</span>-ffmpeg --<span class="keyword">with</span>-opus</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Full build</li>
+</ul>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">cd</span> <span class="comment">doubango</span> <span class="comment">&amp;&amp;</span> <span class="string">.</span><span class="comment">/autogen</span><span class="string">.</span><span class="comment">sh</span> <span class="comment">&amp;&amp;</span> <span class="string">.</span><span class="comment">/configure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">ssl</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">srtp</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">vpx</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">yuv</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">amr</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">speex</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">speexdsp</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">speexresampler</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span><span class="literal">-</span><span class="comment">speexdenoiser</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">opus</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">gsm</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">ilbc</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">g729</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">ffmpeg</span></span><br><span class="line"><span class="comment">make</span> <span class="comment">&amp;&amp;</span> <span class="comment">make</span> <span class="comment">install</span></span><br></pre></td></tr></table></figure>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/11/2015-03-25-iOS中HTTP请求使用cookie/" rel="prev">iOS中HTTP请求使用cookie</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/11/2015-02-06-general-iOS-selfsuper/" rel="next">Self Super</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/"
+                   data-title="音视频开源库编译" data-url="http://yoursite.com/2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/xiaomai.jpg" alt="Fly" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Fly</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">括弧笑</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparing_the_system"><span class="nav-number">1.</span> <span class="nav-text">Preparing the system</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libsrtp"><span class="nav-number">1.1.</span> <span class="nav-text">Building libsrtp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_OpenSSL"><span class="nav-number">1.2.</span> <span class="nav-text">Building OpenSSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libspeex_and_libspeexdsp"><span class="nav-number">1.3.</span> <span class="nav-text">Building libspeex and libspeexdsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_YASM"><span class="nav-number">1.4.</span> <span class="nav-text">Building YASM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libvpx"><span class="nav-number">1.5.</span> <span class="nav-text">Building libvpx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libyuv"><span class="nav-number">1.6.</span> <span class="nav-text">Building libyuv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libopus"><span class="nav-number">1.7.</span> <span class="nav-text">Building libopus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_opencore-amr"><span class="nav-number">1.8.</span> <span class="nav-text">Building opencore-amr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_libgsm"><span class="nav-number">1.9.</span> <span class="nav-text">Building libgsm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_g729"><span class="nav-number">1.10.</span> <span class="nav-text">Building g729</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_iLBC"><span class="nav-number">1.11.</span> <span class="nav-text">Building iLBC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_x264"><span class="nav-number">1.12.</span> <span class="nav-text">Building x264</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_FFmpeg"><span class="nav-number">1.13.</span> <span class="nav-text">Building FFmpeg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_OpenH264"><span class="nav-number">1.14.</span> <span class="nav-text">Building OpenH264</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building_Doubango"><span class="nav-number">1.15.</span> <span class="nav-text">Building Doubango</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fly</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"fenglianyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -37,19 +37,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="self和super的区别">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2015/08/10/hello-world/index.html">
+<meta property="og:title" content="Self Super">
+<meta property="og:url" content="http://yoursite.com/2015/08/11/2015-02-06-general-iOS-selfsuper/index.html">
 <meta property="og:site_name" content="冯廉义的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-08-10T09:37:17.000Z">
+<meta property="og:description" content="self和super的区别">
+<meta property="og:updated_time" content="2015-08-10T06:36:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="Self Super">
+<meta name="twitter:description" content="self和super的区别">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +56,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | 冯廉义的博客 </title>
+  <title> Self Super | 冯廉义的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +205,7 @@ Quick">
           
           
             
-              Hello World
+              Self Super
             
           
         </h1>
@@ -217,19 +214,34 @@ Quick">
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-10T17:37:17+08:00" content="2015-08-10">
-            2015-08-10
+          <time itemprop="dateCreated" datetime="2015-08-11T17:03:03+08:00" content="2015-08-11">
+            2015-08-11
           </time>
         </span>
 
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/iOS/" itemprop="url" rel="index">
+                  <span itemprop="name">iOS</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
         
 
         
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/10/hello-world/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/10/hello-world/" itemprop="commentsCount"></span>
+              <a href="/2015/08/11/2015-02-06-general-iOS-selfsuper/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-02-06-general-iOS-selfsuper/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -243,31 +255,51 @@ Quick">
       
 
       
-        <span itemprop="articleBody"><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <span itemprop="articleBody"><h3 id="Self_Super_在子类中的调用class方法">Self Super 在子类中的调用class方法</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Son</span> : <span class="title">Father</span> </span></span><br><span class="line">- (<span class="keyword">id</span>)init &#123; </span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init]; </span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123; </span><br><span class="line">     <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class])); </span><br><span class="line">     <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">super</span> class]));</span><br><span class="line">    &#125; <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>答案：都输出 Son</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">05</span> <span class="number">11</span>:<span class="number">06</span>:<span class="number">18.060</span> Test[<span class="number">8566</span>:<span class="number">568584</span>] NSStringFromClass([self <span class="keyword">class</span>]) = Son </span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">05</span> <span class="number">11</span>:<span class="number">06</span>:<span class="number">18.061</span> Test[<span class="number">8566</span>:<span class="number">568584</span>] NSStringFromClass([super <span class="keyword">class</span>]) = Son</span><br></pre></td></tr></table></figure>
+<p>解惑：这个题目主要是考察关于objc中对 self 和 super 的理解。<br>self 是类的隐藏参数，指向当前调用方法的这个类的实例。而 super 是一个 Magic Keyword， 它本质是一个编译器标示符，和 self 是指向的同一个消息接受者。上面的例子不管调用[self class]还是[super class]，接受消息的对象都是当前 Son ＊xxx 这个对象。而不同的是，super是告诉编译器，调用 class 这个方法时，要去父类的方法，而不是本类里的。<br>当使用 self 调用方法时，会从当前类的方法列表中开始找，如果没有，就从父类中再找；而当使用 super 时，则从父类的方法列表中开始找。然后调用父类的这个方法。</p>
+<h3 id="使用clang重写命令:">使用clang重写命令:</h3><pre><code>clang -rewrite-objc test.m
+
+NSLog<span class="params">(<span class="params">(NSString *)</span> NSStringFromClass<span class="params">(<span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(id, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSend)</span><span class="params">(<span class="params">(id)</span>self, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>)</span>; 
+NSLog<span class="params">(<span class="params">(NSString *)</span>,NSStringFromClass<span class="params">(<span class="params">(<span class="params">(Class <span class="params">(*)</span><span class="params">(__rw_objc_super *, SEL)</span>)</span><span class="params">(void *)</span>objc_msgSendSuper)</span><span class="params">(<span class="params">(__rw_objc_super)</span>{ <span class="params">(id)</span>self, <span class="params">(id)</span>class_getSuperclass<span class="params">(objc_getClass<span class="params">(<span class="string">"Son"</span>)</span>)</span> }, sel_registerName<span class="params">(<span class="string">"class"</span>)</span>)</span>)</span>)</span>;
+</code></pre><p>从上面的代码中，我们可以发现在调用 [self class] 时，会转化成 objc_msgSend函数。看下函数定义：<br>    id objc_msgSend(id self, SEL op, …)</p>
+<p>我们把 self 做为第一个参数传递进去。<br>而在调用 [super class]时，会转化成 objc_msgSendSuper函数。看下函数定义:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> objc_msgSendSuper(<span class="keyword">struct</span> objc_super *<span class="keyword">super</span>, SEL op, ...)</span><br></pre></td></tr></table></figure>
+<p>第一个参数是 objc_super 这样一个结构体，其定义如下:</p>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_super</span> </span>&#123; </span><br><span class="line">__unsafe_unretained id receiver;</span><br><span class="line">__unsafe_unretained Class super_class; </span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>结构体有两个成员，第一个成员是 receiver, 类似于上面的 objc_msgSend函数第一个参数self 。第二个成员是记录当前类的父类是什么。</p>
+<p>所以，当调用 ［self class] 时，实际先调用的是 objc_msgSend函数，第一个参数是 Son当前的这个实例，然后在 Son 这个类里面去找 - (Class)class这个方法，没有，去父类 Father里找，也没有，最后在 NSObject类中发现这个方法。而 - (Class)class的实现就是返回self的类别，故上述输出结果为 Son。</p>
+<h3 id="objc_Runtime开源代码对-_(Class)class方法的实现:">objc Runtime开源代码对- (Class)class方法的实现:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="constant">Class</span>)<span class="class"><span class="keyword">class</span> &#123; </span></span><br><span class="line"><span class="keyword">return</span> object_getClass(<span class="keyword">self</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而当调用 [super class]时，会转换成objc_msgSendSuper函数。</p>
+<ul>
+<li>第一步先构造 objc_super 结构体，结构体第一个成员就是 self 。第二个成员是 (id)class_getSuperclass(objc_getClass(“Son”)) , 实际该函数输出结果为 Father。</li>
+<li>第二步是去 Father这个类里去找- (Class)class，没有，然后去NSObject类去找，找到了。最后内部是使用 objc_msgSend(objc_super-&gt;receiver, @selector(class))去调用，此时已经和[self class]调用相同了，故上述输出结果仍然返回 Son。</li>
+</ul>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/11/2014-09-15-general-git-resources/" rel="prev">Git 常用资源</a>
+              <a href="/2015/08/11/2015-02-06-opensource-iOS-音视频开源库编译/" rel="prev">音视频开源库编译</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/11/2015-02-06-Xcode-iOS-Xcode6问题解决办法/" rel="next">升级到 Xcode6以后出现错误、警告解决办法</a>
             
           </div>
         </div>
@@ -296,8 +328,8 @@ Quick">
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/08/10/hello-world/"
-                   data-title="Hello World" data-url="http://yoursite.com/2015/08/10/hello-world/">
+              <div class="ds-thread" data-thread-key="2015/08/11/2015-02-06-general-iOS-selfsuper/"
+                   data-title="Self Super" data-url="http://yoursite.com/2015/08/11/2015-02-06-general-iOS-selfsuper/">
               </div>
             
           </div>
@@ -379,7 +411,7 @@ Quick">
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick_Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create_a_new_post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run_server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate_static_files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy_to_remote_sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Self_Super_在子类中的调用class方法"><span class="nav-number">1.</span> <span class="nav-text">Self Super 在子类中的调用class方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用clang重写命令:"><span class="nav-number">2.</span> <span class="nav-text">使用clang重写命令:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objc_Runtime开源代码对-_(Class)class方法的实现:"><span class="nav-number">3.</span> <span class="nav-text">objc Runtime开源代码对- (Class)class方法的实现:</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
