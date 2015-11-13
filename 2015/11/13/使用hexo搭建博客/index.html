@@ -1,0 +1,996 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="括弧笑" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="##注册GitHub访问：http://www.github.com/
+注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。
+注册过程比较简单，详细也可以看：
+一步步在GitHub上创建博客主页 全系列 by pchou（推荐）
+##配置和使用Github以下教程主要参考beiyuu的《使用Github Pages建独立博客》写成。
+####配置SSH keys我们">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用hexo搭建博客">
+<meta property="og:url" content="http://fly1324928301.github.io/2015/11/13/使用hexo搭建博客/index.html">
+<meta property="og:site_name" content="冯廉义的博客">
+<meta property="og:description" content="##注册GitHub访问：http://www.github.com/
+注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。
+注册过程比较简单，详细也可以看：
+一步步在GitHub上创建博客主页 全系列 by pchou（推荐）
+##配置和使用Github以下教程主要参考beiyuu的《使用Github Pages建独立博客》写成。
+####配置SSH keys我们">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog1.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog2.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog3.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog4.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog5.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog6.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog7.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog8.png">
+<meta property="og:image" content="http://fly1324928301.github.io/uploads/hexo_blog9.png">
+<meta property="og:updated_time" content="2015-11-13T08:45:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用hexo搭建博客">
+<meta name="twitter:description" content="##注册GitHub访问：http://www.github.com/
+注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。
+注册过程比较简单，详细也可以看：
+一步步在GitHub上创建博客主页 全系列 by pchou（推荐）
+##配置和使用Github以下教程主要参考beiyuu的《使用Github Pages建独立博客》写成。
+####配置SSH keys我们">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 使用hexo搭建博客 | 冯廉义的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0d85e8093977b9246c49a6158ac7109f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">冯廉义的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'W_WvCy_ZwMABe_DrMb_Q','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用hexo搭建博客
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-13T16:12:11+08:00" content="2015-11-13">
+            2015-11-13
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/13/使用hexo搭建博客/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/13/使用hexo搭建博客/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="##注册GitHub">##注册GitHub</h2><p>访问：<a href="http://www.github.com/" target="_blank" rel="external">http://www.github.com/</a></p>
+<p>注册你的username和邮箱，邮箱十分重要，GitHub上很多通知都是通过邮箱的。</p>
+<p>注册过程比较简单，详细也可以看：</p>
+<p>一步步在GitHub上创建博客主页 全系列 by pchou（推荐）</p>
+<h2 id="##配置和使用Github">##配置和使用Github</h2><p>以下教程主要参考beiyuu的《使用Github Pages建独立博客》写成。</p>
+<p>####配置SSH keys<br>我们如何让本地git项目与远程的github建立联系呢？用SSH keys。</p>
+<p>####检查SSH keys的设置</p>
+<p>首先我们需要检查你电脑上现有的ssh key：</p>
+<pre><code>$ <span class="built_in">cd</span> ~/. ssh 检查本机的ssh密钥
+</code></pre><p>如果提示：No such file or directory 说明你是第一次使用git。</p>
+<p>####生成新的SSH Key：</p>
+<pre><code>$ ssh-keygen -t rsa -C <span class="string">"邮件地址@youremail.com"</span>
+Generating <span class="keyword">public</span>/<span class="keyword">private</span> rsa <span class="keyword">key</span> pair.
+Enter file <span class="keyword">in</span> which <span class="keyword">to</span> save the <span class="keyword">key</span> (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;
+</code></pre><p>注意1: 此处的邮箱地址，你可以输入自己的邮箱地址；注意2: 此处的「-C」的是大写的「C」</p>
+<p>然后系统会要你输入密码：</p>
+<pre><code>Enter passphrase (empty <span class="keyword">for</span> no passphrase):<span class="variable">&lt;输入加密串&gt;</span>
+Enter same passphrase again:<span class="variable">&lt;再次输入加密串&gt;</span>
+</code></pre><p>在回车中会提示你输入一个密码，这个密码会在你提交项目时使用，如果为空的话提交项目时则不用输入。这个设置是防止别人往你的项目里提交内容。</p>
+<p>最后看到这样的界面，就成功设置ssh key了：</p>
+<p><img src="/uploads/hexo_blog1.png" alt="hexo_blog1 text"></p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p>####添加SSH Key到GitHub</p>
+<p>在本机设置SSH Key之后，需要添加到GitHub上，以完成SSH链接的设置。</p>
+<p>1、打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件。此文件里面内容为刚才生成人密钥。如果看不到这个文件，你需要设置显示隐藏文件。准确的复制这个文件的内容，才能保证设置的成功。</p>
+<p>2、登陆github系统。点击右上角的 Account Settings—&gt;SSH Public keys —&gt; add another public keys</p>
+<p>3、把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了</p>
+<p><img src="/uploads/hexo_blog2.png" alt="hexo_blog2 text"></p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p>测试</p>
+<p>可以输入下面的命令，看看设置是否成功，git@github.com的部分不要修改：</p>
+<pre><code><span class="variable">$ </span>ssh -<span class="constant">T </span>git<span class="variable">@github</span>.com
+</code></pre><p>如果是下面的反馈：</p>
+<pre><code>The authenticity <span class="keyword">of</span> host <span class="comment">'github.com (207.97.227.239)' can't be established.</span>
+RSA <span class="keyword">key</span> fingerprint <span class="keyword">is</span> <span class="number">16</span>:<span class="number">27</span>:ac:a5:<span class="number">76</span>:<span class="number">28</span>:<span class="number">2</span>d:<span class="number">36</span>:<span class="number">63</span>:<span class="number">1</span>b:    <span class="number">56</span>:<span class="number">4</span>d:eb:df:a6:<span class="number">48.</span>
+Are you sure you want <span class="keyword">to</span> <span class="keyword">continue</span> connecting (yes/no)?
+</code></pre><p>不要紧张，输入yes就好，然后会看到：</p>
+<pre><code>Hi cnfeat! You've successfully authenticated, <span class="keyword">but</span> GitHub <span class="keyword">does</span> <span class="keyword">not</span> provide shell access.
+</code></pre><p>####设置用户信息</p>
+<p>现在你已经可以通过SSH链接到GitHub了，还有一些个人信息需要完善的。</p>
+<p>Git会根据用户的名字和邮箱来记录提交。GitHub也是用这些信息来做权限的处理，输入下面的代码进行个人信息的设置，把名称和邮箱替换成你自己的，名字必须是你的真名，而不是GitHub的昵称。</p>
+<pre><code>$ git config --global user<span class="class">.name</span> <span class="string">"cnfeat"</span><span class="comment">//用户名</span>
+$ git config --global user<span class="class">.email</span>  <span class="string">"cnfeat@gmail.com"</span><span class="comment">//填写自己的邮箱</span>
+</code></pre><p>####SSH Key配置成功</p>
+<p>本机已成功连接到github。</p>
+<p>若有问题，请重新设置。常见错误请参考：</p>
+<p> <a href="http://help.github.com/articles/generating-ssh-keys" target="_blank" rel="external">GitHub Help - Generating SSH Keys</a></p>
+<p> <a href="http://help.github.com/articles/error-permission-denied-publickey" target="_blank" rel="external">GitHub Help - Error Permission denied (publickey)</a></p>
+<h2 id="##使用GitHub_Pages建立博客">##使用GitHub Pages建立博客</h2><p>与GitHub建立好链接之后，就可以方便的使用它提供的Pages服务，GitHub Pages分两种，一种是你的GitHub用户名建立的username.github.io这样的用户&amp;组织页（站），另一种是依附项目的pages。</p>
+<p>想建立个人博客是用的第一种，形如cnfeat.github.io这样的可访问的站，每个用户名下面只能建立一个。</p>
+<p>####github上建立仓库</p>
+<p>登录后系统，在github首页，点击页面右下角「New Repository」</p>
+<p><img src="/uploads/hexo_blog3.png" alt="hexo_blog3 text"></p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p>填写项目信息：</p>
+<p>project name：cnfeat.github.io</p>
+<p>description： Writing 1000 Words a Day Changed My Life</p>
+<p>注：Github Pages的Repository名字是特定的，比如我Github账号是cnfeat，那么我Github Pages Repository名字就是cnfeat.github.io。</p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p><img src="/uploads/hexo_blog4.png" alt="hexo_blog4 text"></p>
+<p>点击「Create Repository」 完成创建。</p>
+<p>详细可以看这里：一步步在GitHub上创建博客主页(2)</p>
+<h2 id="##用Hexo克隆主题">##用Hexo克隆主题</h2><p>###Hexo介绍</p>
+<p>Hexo的作者是tommy351，根据官方介绍，Hexo是一个简单、快速、强大的博客发布工具，支持Markdown格式。</p>
+<p>####安装Hexo</p>
+<p>打开git。</p>
+<pre><code>$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> hexo</span>
+</code></pre><p>####部署Hexo</p>
+<p>在我的电脑中建立一个名字叫「Hexo」的文件夹，然后在此文件夹中右键打开Git Bash。</p>
+<pre><code><span class="variable">$ </span>hexo init
+</code></pre><p>Hexo随后会自动在目标文件夹建立网站所需要的所有文件。</p>
+<p>####复制cnfeat的主题</p>
+<p>建立了Hexo文件之后就可以复制我的主题了</p>
+<pre><code><span class="variable">$ </span>git clone <span class="symbol">https:</span>/<span class="regexp">/github.comcnfeat/cnfeat</span>.git themes/jacman
+</code></pre><p>如果不行，可以复制wuchong的修改的主题，我的就是复制他的修改的。</p>
+<pre><code><span class="variable">$ </span>git clone <span class="symbol">https:</span>/<span class="regexp">/github.com/wuchong</span><span class="regexp">/jacman.git themes/jacman</span>
+</code></pre><p>或者复制yangjian的</p>
+<pre><code>$ git clone <span class="string">https:</span><span class="comment">//github.com/A-limon/pacman.git themes/pacman</span>
+</code></pre><p>####启用cnfeat的主题</p>
+<p>修改Hexo目录下的config.yml配置文件中的theme属性，将其设置为jacman。同时请设置stylus属性中的compress值为true。</p>
+<p>####更新主题</p>
+<pre><code><span class="variable">$ </span>cd themes/jacman
+<span class="variable">$ </span>git pull
+</code></pre><p>注意：为避免出错，请先备份你的_config.yml 文件后再升级</p>
+<p>####本地查看调试</p>
+<pre><code><span class="variable">$ </span>hexo g <span class="comment">#生成</span>
+<span class="variable">$ </span>hexo s <span class="comment">#启动本地服务，进行文章预览调试</span>
+</code></pre><p>或者直接作用组合命令</p>
+<pre><code>$ hexo <span class="keyword">d</span> -<span class="keyword">g</span>
+</code></pre><p>浏览器输入<a href="http://localhost:4000，查看搭建效果。此后的每次变更_config.yml" target="_blank" rel="external">http://localhost:4000，查看搭建效果。此后的每次变更_config.yml</a> 文件或者上传文件都可以先用此命令调试，非常好用，尤其是当你想调试出自己想要的主题时。</p>
+<h2 id="##将独立域名与GitHub_Pages的空间绑定">##将独立域名与GitHub Pages的空间绑定</h2><p>####GitHub Pages的设置</p>
+<p>方法一：在Repository的根目录下面，新建一个名为CNAME的文本文件，里面写入你要绑定的域名，比如cnfeat.com。</p>
+<p>方法二：到我的github仓库，点击右下角的「Download ZIP」，下载源文件，解压，修改CNAME，改成你想要的域名，放进Hexo\source目录下，用hexo命令提交上去。<br>    $ hexo d -g</p>
+<p>####DNS设置</p>
+<p>用DNSpod，快，免费，稳定。</p>
+<p>注册DNSpod，添加域名，如下图设置。</p>
+<p><img src="/uploads/hexo_blog5.png" alt="hexo_blog5 text"></p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p>其中A的两条记录指向的ip地址是github Pages的提供的ip</p>
+<p>192.30.252.153<br>192.30.252.154<br>如博客不能登录，有可能是github更改了空间服务的ip地址，记得及时到在GitHub Pages查看最新的ip即可</p>
+<p>www指定的记录是你在github注册的仓库。</p>
+<p>####去Godaddy修改DNS地址</p>
+<p>更改godaddy的Nameservers为DNSpod的NameServers。</p>
+<p><img src="/uploads/hexo_blog6.png" alt="hexo_blog6 text"></p>
+<p>如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p>1、点击「My Account」，管理我的域名。 如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p><img src="/uploads/hexo_blog7.png" alt="hexo_blog7 text"></p>
+<p>2、点击域名。 如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p><img src="/uploads/hexo_blog8.png" alt="hexo_blog8 text"></p>
+<p>3、将godaddy的Nameservers更改成f1g1ns1.dnspod.net和f1g1ns2.dnspod.net 如何搭建一个独立博客——简明Github <wbr>Pages与Hexo教程</p>
+<p><img src="/uploads/hexo_blog9.png" alt="hexo_blog9 text"></p>
+<p>如有不详看可以看DNSpod提供的官方帮助</p>
+<p>详细也可以看这里：一步步在GitHub上创建博客主页(3)</p>
+<h2 id="##搭建完成">##搭建完成</h2><p>至此，独立博客就算搭建完成，如需进步一完善请在参看以下文章或博客下留言。</p>
+<p>Pacman主题介绍 by yangjian</p>
+<p>使用hexo搭建博客 by yangjian</p>
+<p>hexo系列教程：（二）搭建hexo博客 by zippera（推荐）</p>
+<p>hexo系列教程：（三）hexo博客的配置、使用by zippera（推荐）</p>
+<h2 id="##进阶篇：Hexo设置">##进阶篇：Hexo设置</h2><p>网站搭建完成后，就可以根据自己爱好来对Hexo生成的网站进行设置了，对整站的设置，只要修改项目目录的_config.yml就可以了，这是我的设置，可供参考。</p>
+<pre><code><span class="preprocessor"># Hexo Configuration</span>
+<span class="preprocessor">## Docs: http://hexo.io/docs/configuration.html</span>
+<span class="preprocessor">## Source: https://github.com/tommy351/hexo/</span>
+
+<span class="preprocessor"># Site #整站的基本信息</span>
+<span class="label">title:</span> <span class="number">1000</span> words a Day <span class="preprocessor">#网站标题</span>
+<span class="label">subtitle:</span> Writing <span class="number">1000</span> Words a Day Changes My Life <span class="preprocessor">#网站副标题</span>
+<span class="label">description:</span> 学习总结 思考感悟 知识管理 <span class="preprocessor">#网站描述</span>
+<span class="label">author:</span>  cnFeat <span class="preprocessor">#网站作者，在下方显示</span>
+<span class="label">email:</span> cnFeat@gmail.com <span class="preprocessor">#联系邮箱</span>
+<span class="label">language:</span> <span class="built_in">zh</span>-CN
+
+<span class="preprocessor"># URL</span>
+<span class="preprocessor">## If your site is put in a subdirectory</span>
+<span class="label">url:</span> http://www.cnfeat.com <span class="preprocessor">#你的域名</span>
+<span class="label">root:</span> /
+<span class="label">permalink:</span> :year/:month/:day/:title/
+<span class="label">tag_dir:</span> tags
+<span class="label">archive_dir:</span> archives
+<span class="label">category_dir:</span> categories
+<span class="label">code_dir:</span> downloads/code
+
+<span class="preprocessor"># Directory</span>
+<span class="label">source_dir:</span> source
+<span class="label">public_dir:</span> public
+
+<span class="preprocessor"># Writing</span>
+<span class="label">new_post_name:</span> :title.md <span class="preprocessor"># File name of new posts</span>
+<span class="label">default_layout:</span> post
+<span class="label">auto_spacing:</span> false <span class="preprocessor"># Add spaces between asian characters and western characters</span>
+<span class="label">titlecase:</span> false <span class="preprocessor"># Transform title into titlecase</span>
+<span class="label">external_link:</span> true <span class="preprocessor"># Open external links in new tab</span>
+<span class="label">max_open_file:</span> <span class="number">100</span>
+<span class="label">multi_thread:</span> true
+<span class="label">filename_case:</span> <span class="number">0</span>
+<span class="label">render_drafts:</span> false
+<span class="label">post_asset_folder:</span> false
+<span class="label">highlight:</span>
+  enable: true
+  line_number: true
+  tab_replace:
+
+<span class="preprocessor"># Category &amp; Tag</span>
+<span class="label">default_category:</span> uncategorized
+<span class="label">category_map:</span>
+<span class="label">tag_map:</span>
+
+<span class="preprocessor"># Archives</span>
+<span class="preprocessor">## 2: Enable pagination</span>
+<span class="preprocessor">## 1: Disable pagination</span>
+<span class="preprocessor">## 0: Fully Disable</span>
+<span class="label">archive:</span> <span class="number">2</span>
+<span class="label">category:</span> <span class="number">2</span>
+<span class="label">tag:</span> <span class="number">2</span>
+
+<span class="preprocessor"># Server</span>
+<span class="preprocessor">## Hexo uses Connect as a server</span>
+<span class="preprocessor">## You can customize the logger format as defined in</span>
+<span class="preprocessor">## http://www.senchalabs.org/connect/logger.html</span>
+<span class="label">port:</span> <span class="number">4000</span>
+<span class="label">server_ip:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>
+<span class="label">logger:</span> false
+<span class="label">logger_format:</span>
+
+<span class="preprocessor"># Date / Time format</span>
+<span class="preprocessor">## Hexo uses Moment.js to parse and display date</span>
+<span class="preprocessor">## You can customize the date format as defined in</span>
+<span class="preprocessor">## http://momentjs.com/docs/#/displaying/format/</span>
+<span class="label">date_format:</span> YYYY-MM-DD
+<span class="label">time_format:</span> H:mm:ss
+
+<span class="preprocessor"># Pagination</span>
+<span class="preprocessor">## Set per_page to 0 to disable pagination</span>
+<span class="label">per_page:</span> <span class="number">15</span> <span class="preprocessor">#每页15篇文章</span>
+<span class="label">pagination_dir:</span> page
+
+<span class="preprocessor"># Disqus #社会化评论disqus，我使用多说，在主题中配置</span>
+<span class="label">disqus_shortname:</span>
+
+<span class="preprocessor"># Extensions</span>
+<span class="preprocessor">## Plugins: https://github.com/tommy351/hexo/wiki/Plugins</span>
+<span class="preprocessor">## Themes: https://github.com/tommy351/hexo/wiki/Themes</span>
+<span class="label">theme:</span> jacman
+<span class="label">exclude_generator:</span>
+<span class="label">Plugins:</span>
+- hexo-generator-feed
+- hexo-generator-sitemap
+
+<span class="preprocessor">#sitemap</span>
+<span class="label">sitemap:</span>
+<span class="label">path:</span> sitemap.xml
+
+<span class="preprocessor">#Feed Atom</span>
+<span class="label">feed:</span>
+<span class="label">type:</span> atom
+<span class="label">path:</span> atom.xml
+<span class="label">limit:</span> <span class="number">20</span>
+
+<span class="preprocessor"># Markdown</span>
+<span class="preprocessor">## https://github.com/chjj/marked</span>
+<span class="label">markdown:</span>
+<span class="label">gfm:</span> true
+<span class="label">pedantic:</span> false
+<span class="label">sanitize:</span> false
+<span class="label">tables:</span> true
+<span class="label">breaks:</span> true
+<span class="label">smartLists:</span> true
+<span class="label">smartypants:</span> true
+
+<span class="preprocessor"># Stylus</span>
+<span class="label">stylus:</span>
+<span class="label">compress:</span> false
+
+<span class="preprocessor"># Deployment</span>
+<span class="preprocessor">## Docs: http://hexo.io/docs/deployment.html</span>
+<span class="label">deploy:</span>
+<span class="label">type:</span> github
+<span class="label">repository:</span> https://github.com/cnfeat/cnfeat.github.io.git
+<span class="label">branch:</span> master  
+</code></pre><p>####修改局部页面</p>
+<p>页面展现的全部逻辑都在每个主题中控制，源代码在hexo\themes\jacman\中：</p>
+<pre><code>.
+├── languages  <span class="preprocessor">#多语言</span>
+|   ├── <span class="keyword">default</span>.yml<span class="preprocessor">#默认语言</span>
+|   └── zh-CN.yml  <span class="preprocessor">#中文语言</span>
+├── <span class="keyword">layout</span> <span class="preprocessor">#布局，根目录下的*.ejs文件是对主页，分页，存档等的控制</span>
+|   ├── _partial   <span class="preprocessor">#局部的布局，此目录下的*.ejs是对头尾等局部的控制</span>
+|   └── _widget<span class="preprocessor">#小挂件的布局，页面下方小挂件的控制</span>
+├── source <span class="preprocessor">#源码</span>
+|   ├── css<span class="preprocessor">#css源码 </span>
+|   |   ├── _base  <span class="preprocessor">#*.styl基础css</span>
+|   |   ├── _partial   <span class="preprocessor">#*.styl局部css</span>
+|   |   ├── fonts  <span class="preprocessor">#字体</span>
+|   |   ├── images <span class="preprocessor">#图片</span>
+|   |   └── style.styl <span class="preprocessor">#*.styl引入需要的css源码</span>
+|   ├── fancybox   <span class="preprocessor">#fancybox效果源码</span>
+|   └── js <span class="preprocessor">#javascript源代码</span>
+├── _config.yml<span class="preprocessor">#主题配置文件</span>
+└── README.md  <span class="preprocessor">#用GitHub的都知道</span>
+</code></pre><p>###发表新文章</p>
+<p>####用hexo发表新文章</p>
+<pre><code><span class="variable">$ </span>hexo n <span class="comment">#写文章 </span>
+</code></pre><p>其中my new post为文章标题，执行命令后，会在项目\source_posts中生成my new post.md文件，用编辑器打开编写即可。</p>
+<p>当然，也可以直接在\source_posts中新建一个md文件，我就是这么做的。</p>
+<p>写完后，推送到服务器上，执行</p>
+<pre><code>$ hexo <span class="keyword">g</span> #生成
+$ hexo <span class="keyword">d</span> #部署 # 可与hexo <span class="keyword">g</span>合并为 hexo <span class="keyword">d</span> -<span class="keyword">g</span>
+</code></pre><p>####用Hexo发表文章的Markdown语法</p>
+<p>使用jacman或pacman主题，建议按此标准语法写：</p>
+<pre><code>title: postName <span class="preprocessor">#文章页面上的显示名称，可以任意修改，不会出现在URL中</span>
+date: <span class="number">2013</span>-<span class="number">12</span>-<span class="number">02</span> <span class="number">15</span>:<span class="number">30</span>:<span class="number">16</span> <span class="preprocessor">#文章生成时间，一般不改，当然也可以任意修改</span>
+category: example <span class="preprocessor">#分类</span>
+tags: [tag1,tag2,tag3] <span class="preprocessor">#文章标签，可空，多标签请用格式，注意:后面有个空格</span>
+description: 附加一段文章摘要，字数最好在<span class="number">140</span>字以内。
+---
+
+以下正文
+</code></pre><p>#####Hexo命令</p>
+<p>#####常用命令：</p>
+<pre><code>hexo <span class="keyword">new</span> <span class="string">"postName"</span> <span class="preprocessor">#新建文章</span>
+hexo <span class="keyword">new</span> page <span class="string">"pageName"</span> <span class="preprocessor">#新建页面</span>
+hexo generate <span class="preprocessor">#生成静态页面至public目录</span>
+hexo <span class="keyword">server</span> <span class="preprocessor">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span>
+hexo deploy <span class="preprocessor">#将.deploy目录部署到GitHub</span>
+</code></pre><p>######常用复合命令：</p>
+<pre><code><span class="title">hexo</span> d -g <span class="comment">#生成加部署</span>
+hexo s -g <span class="comment">#预览加部署</span>
+</code></pre><p>#####简写：</p>
+<pre><code>hexo <span class="keyword">n</span> == hexo new
+hexo <span class="keyword">g</span> == hexo <span class="keyword">generate</span>
+hexo s == hexo server
+hexo <span class="keyword">d</span> == hexo deploy
+</code></pre><h2 id="##安装插件">##安装插件</h2><p>####添加sitemap和feed插件</p>
+<pre><code>$ npm <span class="keyword">install</span> hexo-generator-sitemap
+$ npm <span class="keyword">install</span> hexo-generator-feed
+</code></pre><p>修改_config.yml，增加以下内容</p>
+<pre><code><span class="preprocessor"># Extensions</span>
+<span class="label">Plugins:</span>
+- hexo-generator-feed
+- hexo-generator-sitemap
+
+<span class="preprocessor">#Feed Atom</span>
+<span class="label">feed:</span>
+<span class="label">type:</span> atom
+<span class="label">path:</span> atom.xml
+<span class="label">limit:</span> <span class="number">20</span>
+
+<span class="preprocessor">#sitemap</span>
+<span class="label">sitemap:</span>
+<span class="label">path:</span> sitemap.xml
+</code></pre><h2 id="##Hexo上传README文件">##Hexo上传README文件</h2><p>Github的版本库通常建议同时附上README.md说明文件，但是hexo默认情况下会把所有md文件解析成html文件，所以即使你在线生成了README.md，它也会在你下一次部署时被删去。怎么解决呢？</p>
+<p>在执行hexo deploy前把在本地写好的README.md文件复制到.deploy文件夹中，再去执行hexo deploy。</p>
+<h2 id="##404页面">##404页面</h2><p>GitHub Pages有提供制作404页面的指引：<a href="https://help.github.com/articles/custom-404-pages" target="_blank" rel="external">Custom 404 Pages </a>。</p>
+<p>直接在根目录下创建自己的404.html或者404.md就可以。但是自定义404页面仅对绑定顶级域名的项目才起作用，GitHub默认分配的二级域名是不起作用的，使用hexo server在本机调试也是不起作用的。</p>
+<p>推荐使用腾讯公益404。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/13/2015-02-06-opensource-iOS-音视频开源库编译/" rel="next">音视频开源库编译</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/13/使用hexo搭建博客/"
+                   data-title="使用hexo搭建博客" data-url="http://fly1324928301.github.io/2015/11/13/使用hexo搭建博客/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/xiaomai.jpg" alt="Fly" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Fly</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">括弧笑</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Fly1324928301" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/fly1324928301" target="_blank">weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/feng-lian-yi-73" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="###注册GitHub"><span class="nav-number">1.</span> <span class="nav-text">##注册GitHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###配置和使用Github"><span class="nav-number">2.</span> <span class="nav-text">##配置和使用Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###使用GitHub_Pages建立博客"><span class="nav-number">3.</span> <span class="nav-text">##使用GitHub Pages建立博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###用Hexo克隆主题"><span class="nav-number">4.</span> <span class="nav-text">##用Hexo克隆主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###将独立域名与GitHub_Pages的空间绑定"><span class="nav-number">5.</span> <span class="nav-text">##将独立域名与GitHub Pages的空间绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###搭建完成"><span class="nav-number">6.</span> <span class="nav-text">##搭建完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###进阶篇：Hexo设置"><span class="nav-number">7.</span> <span class="nav-text">##进阶篇：Hexo设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###安装插件"><span class="nav-number">8.</span> <span class="nav-text">##安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###Hexo上传README文件"><span class="nav-number">9.</span> <span class="nav-text">##Hexo上传README文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="###404页面"><span class="nav-number">10.</span> <span class="nav-text">##404页面</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fly</span>
+</div>
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"fenglianyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
