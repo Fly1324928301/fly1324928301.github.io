@@ -1,0 +1,664 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="括弧笑" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="使用Mantle高效构建Model    
+            概述                在iOS开发中，从服务器获取数据，然后解析成本地的模型是经常的要做事，而且重复次数特别多，每次增加一个网络请求或者增加一个模型都需要完成JSON到Model层的转换，手写通过字典valueForKey:直接解析已经更不上时代的步伐，学会利用工具提高自己的工作效率，今天就分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Mantle高效构建Model">
+<meta property="og:url" content="http://fly1324928301.github.io/2016/06/02/使用Mantle高效构建Model/index.html">
+<meta property="og:site_name" content="冯廉义的博客">
+<meta property="og:description" content="使用Mantle高效构建Model    
+            概述                在iOS开发中，从服务器获取数据，然后解析成本地的模型是经常的要做事，而且重复次数特别多，每次增加一个网络请求或者增加一个模型都需要完成JSON到Model层的转换，手写通过字典valueForKey:直接解析已经更不上时代的步伐，学会利用工具提高自己的工作效率，今天就分">
+<meta property="og:updated_time" content="2016-06-02T09:06:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Mantle高效构建Model">
+<meta name="twitter:description" content="使用Mantle高效构建Model    
+            概述                在iOS开发中，从服务器获取数据，然后解析成本地的模型是经常的要做事，而且重复次数特别多，每次增加一个网络请求或者增加一个模型都需要完成JSON到Model层的转换，手写通过字典valueForKey:直接解析已经更不上时代的步伐，学会利用工具提高自己的工作效率，今天就分">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 使用Mantle高效构建Model | 冯廉义的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0d85e8093977b9246c49a6158ac7109f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">冯廉义的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'W_WvCy_ZwMABe_DrMb_Q','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用Mantle高效构建Model
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-06-02T17:05:21+08:00" content="2016-06-02">
+            2016-06-02
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/06/02/使用Mantle高效构建Model/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/02/使用Mantle高效构建Model/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><header class="page-header" style="box-sizing: border-box; padding-bottom: 9px; margin: 40px 0px 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); color: rgb(51, 51, 51); font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; white-space: normal; widows: 1;"><br>    <h1 class="entry-title" itemprop="name headline" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 12px; font-size: 36px; font-family: inherit; line-height: 1.3; color: inherit;"><br>        使用Mantle高效构建Model<br>    </h1><br></header></p>
+<div class="entry-content clearfix" itemprop="articleBody description" style="box-sizing: border-box; font-size: 16px; color: rgb(51, 51, 51); font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; white-space: normal; widows: 1;"><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        概述<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        在iOS开发中，从服务器获取数据，然后解析成本地的模型是经常的要做事，而且重复次数特别多，每次增加一个网络请求或者增加一个模型都需要完成<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">JSON</code>到<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Model</code>层的转换，手写通过字典<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">valueForKey:</code>直接解析已经更不上时代的步伐，学会利用工具提高自己的工作效率，今天就分享一下<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>这个框架解析的心得。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>解决的痛点：<br>    </p><br>    <ul style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" class=" list-paddingleft-2"><br>        <li style=""><br>            服务器经常更新（添加或者删除）字段，客服端需要在<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Model</code>层初始化的时候修改取值字段，易出错，而且繁琐。<br>        </li><br>        <li style=""><br>            实现自定义的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Model</code>的序列化，以便将数据保存到本地，也就是说实现<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSCoding</code>协议，在模型复制的情况下添加或者修改字段非常麻烦。<br>        </li><br>        <li style=""><br>            自定义的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Model</code>的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Copy</code>,你必须手动实现<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSCopying</code>协议,而且没有办法反序列化成<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">JSON</code>。<br>        </li><br>    </ul><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>很好的解决的以上痛点：<br>    </p><br>    <ul style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" class=" list-paddingleft-2"><br>        <li style=""><br>            实现了<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSCopying</code>协议。<br>        </li><br>        <li style=""><br>            实现了<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSCoding</code>协议，可以通过<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSKeyedArchiver</code>将数据归档到本地。<br>        </li><br>        <li style=""><br>            提供了<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">isEqual:</code>和<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">hash</code>的默认实现。<br>        </li><br>        <li style=""><br>            可以在<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Model</code>和<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">JSON</code>之间互相转换。<br>        </li><br>    </ul><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        以一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">CATProfile</code>模型类为例，演示这个框架怎样以一种非常简单的方式将一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSDictionary</code>对象映射成一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Objective-C</code>,反之亦然。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        下面的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">CATProfile</code>模型<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">{<br>  &quot;id&quot;: 1,<br>  &quot;name&quot;: &quot;Objective Cat&quot;,<br>  &quot;birthday&quot;: &quot;2013-09-12 13:29:36 +0100&quot;,<br>  &quot;website&quot;: &quot;<a href="http://objc.at&amp;quot" target="_blank" rel="external">http://objc.at&amp;quot</a>;,<br>  &quot;location&quot;: { &quot;lat&quot;: &quot;48.2083&quot;, &quot;lon&quot;: &quot;16.3731&quot; },<br>  &quot;relationship_status&quot;: &quot;single&quot;,<br>  &quot;awesome&quot;: true<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        下面我们创建一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLModel</code>子类代表以上的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Json</code>对象。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// CATProfile.h<br>typedef NS_ENUM(NSInteger, CATRelationshipStatus) {<br>    CATRelationshipStatusSingle = 0,<br>    CATRelationshipStatusInRelationship,<br>    CATRelationshipStatusComplicated<br>};<br><br>@interface CATProfile : MTLModel&lt;MTLJSONSerializing&gt;<br><br>@property(strong, nonatomic) NSNumber <em>profileId;<br>@property(strong, nonatomic) NSString </em>name;<br>@property(strong, nonatomic) NSDate <em>birthday;<br>@property(strong, nonatomic) NSURL </em>website;<br>@property(nonatomic) CLLocationCoordinate2D locationCoordinate;<br>@property(nonatomic) CATRelationshipStatus relationshipStatus;<br>@property(nonatomic, getter=isAwesome) BOOL awesome;<br><br>@end<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">CATProfile</code>类继承自<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLModel</code>并且实现了<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLJSONSerializing</code>，协议要求实现<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">+JSONKeyPathsByPropertyKey</code>方法<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// CATProfile.m<br>@implementation<br><br>+ (NSDictionary <em>)JSONKeyPathsByPropertyKey {<br>    // properties defined in header &lt; : &gt; key in JSON Dictionary<br>    return @{<br>             @&quot;profileId&quot;:          @&quot;id&quot;,<br>             @&quot;websiteURL&quot;:         @&quot;website&quot;,<br>             @&quot;locationCoordinate&quot;: @&quot;location&quot;,<br>             @&quot;relationshipStatus&quot;: @&quot;relationship_status&quot;,<br>            };<br>}<br><br>@end<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">+JSONKeyPathsByPropertyKey</code>方法返回一个在JSON数据中需要模型的属性匹配的值的字典，这能确保<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>知道那个JSON键键使用来构成一个指定的模型接口。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        很明显除了这个列表中的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">name</code>,<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">birthday</code>和<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">awesome</code>属性。假如一个属性在字典中被忽略，<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>将自动在JSON中查找带有相同名称的接口。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <span style="box-sizing: border-box; font-weight: 700;">NSValueTransformer</span><br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>还能够处理任意类型的转换，例如<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSString</code>he<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSNumber</code>默认支持。然而，它也需要一些帮助对于处理非任意的类型例如<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSURL</code>和<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">枚举</code>还有自定义的结构体像<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">CLLocationCoordinate2D</code>。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>依赖<span style="box-sizing: border-box; font-weight: 700;">Foundation</span>框架下<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>对象来实现在模型代表的JSON层和OC对象的实际接口之间的值的映射。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        创建一个自定义<span style="box-sizing: border-box; font-weight: 700;">transformer</span>给某个属性，我们需要实现一个叫做<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">+&lt;propertyName&gt;JSONTransformer</code>的类方法并且返回一个想要的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>对象。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// mapping birthday to NSDate and vice-versa<br>+ (NSValueTransformer )birthdayJSONTransformer {<br>    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString <em>dateString) {<br>        return [self.dateFormatter dateFromString:dateString];<br>    } reverseBlock:^(NSDate </em>date) {<br>        return [self.dateFormatter stringFromDate:date];<br>    }];<br>}<br><br>+ (NSDateFormatter <em>)dateFormatter {<br>    NSDateFormatter </em>dateFormatter = [[NSDateFormatter alloc] init];<br>    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@&quot;en_US_POSIX&quot;];<br>    dateFormatter.dateFormat = @&quot;yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSS&#39;Z&#39;&quot;;<br><br>    return dateFormatter;<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>在<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">runtime</code>调用这个方法来决定怎样变换<span style="box-sizing: border-box; font-weight: 700;">birthday&nbsp;</span>属性，正向转换block从一个字符串对象到一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSDate</code>对象，反向转换block将<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSDate</code>对象转换回一个字符串对象，非常棒！<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        下面列举了一些变换方法，对于所有的我们需要注意的非任意属性以供参考。<br>    </p><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        NSURL ↔︎ JSON string<br>    </h3><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">+ (NSValueTransformer <em>)websiteURLJSONTransformer {<br>    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];<br>}<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        CLLocationCoordinate2D ↔︎ JSON object<br>    </h3><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="827"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">+ (NSValueTransformer )locationCoordinateJSONTransformer {<br>    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSDictionary <em>coordinateDict) {<br>        CLLocationDegrees latitude = [coordinateDict[@&quot;lat&quot;] doubleValue];<br>        CLLocationDegrees longitude = [coordinateDict[@&quot;lon&quot;] doubleValue];<br>        return [NSValue valueWithMKCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];<br>    } reverseBlock:^(NSValue </em>coordinateValue) {<br>        CLLocationCoordinate2D coordinate = [coordinateValue MKCoordinateValue];<br>        return @{@&quot;lat&quot;: @(coordinate.latitude), @&quot;lon&quot;: @(coordinate.longitude)};<br>    }];<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        enum ↔︎ JSON string<br>    </h3><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">+ (NSValueTransformer <em>)relationshipStatusJSONTransformer {<br>    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:@{<br>        @&quot;single&quot;: @(CATRelationshipStatusSingle),<br>        @&quot;relationship&quot;: @(CATRelationshipStatusInRelationship),<br>        @&quot;complicated&quot;: @(CATRelationshipStatusComplicated)<br>    }];<br>}<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        BOOL ↔︎ JSON boolean<br>    </h3><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">+ (NSValueTransformer )awesomeJSONTransformer {<br>    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        从JSON创建模型对象<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        一旦模型配置完成，就该获得JSON对象从API中，并且把它转换成我们模型的一个实例。首先，我们需要把JSON呈现转换成一个<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSDictionary</code>,它能够用来通过<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>来创建我们的模型，很幸运的是iOS提供了一个非常棒的方法来处理它，就是通过<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSJSONSerialization</code>。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        那样以后，<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLJSONAdapter</code>类就能利用<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>做繁重的工作来创建我们的模型。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="867"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// create NSDictionary from JSON data<br>NSData JSONData = … // the JSON response from the API<br>NSDictionary <em>JSONDict = [NSJSONSerialization JSONObjectWithData:JSONData options:0 error:NULL];<br><br>// create model object from NSDictionary using MTLJSONSerialisation<br>CATProfile </em>profile = [MTLJSONAdapter modelOfClass:CATProfile.class fromJSONDictionary:JSONDict error:NULL];<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        从模型对象创建JSON<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLJSONAdapter</code>也有能力创建一个字典从我们的的模型类中，以便能直接编码回一个JSON字符串。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// create NSDictionary from model class using MTLJSONSerialisation<br>CATProfile <em>profile = …<br>NSDictionary </em>profileDict = [MTLJSONAdapter JSONDictionaryFromModel:profile];<br><br>// convert NSDictionary to JSON data<br>NSData <em>JSONData = [NSJSONSerialization dataWithJSONObject:profileDict options:0 error:NULL];<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <blockquote style="box-sizing: border-box; padding: 10px 20px; margin-top: 0px; margin-bottom: 20px; font-size: 17.5px; border-left-width: 5px; border-left-color: rgb(238, 238, 238);"><br>        <p style="box-sizing: border-box;"><br>            假如当创建一个JSON呈现你的模型是在你的模型中有一个属性不应该包括，你应该返回<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 15.75px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSNull.null</code>,例如。在<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 15.75px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">+JSONKeyPathsByPropertyKey</code>的@{“name” : “NSNull.null”}。<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 15.75px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>将安全的忽略这个属性。<br>        </p><br>    </blockquote><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        映射数组和字典<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        大多数情况，模型和其他模型有关系，这些关系普遍通过JSON数组或者对象来呈现。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">{<br>  &quot;id&quot;: 1,<br>  &quot;name&quot;: &quot;Objective Cat&quot;,<br>  …,<br><br>  &quot;owner&quot;: {<br>    &quot;id&quot;: 99,<br>    &quot;name&quot;: &quot;Alexander Schuch&quot;<br>  },<br>  &quot;friends&quot;: [<br>    {<br>      &quot;name&quot;: &quot;Owly&quot;,<br>      &quot;type&quot;: &quot;bird&quot;<br>    },<br>    {<br>      &quot;name&quot;: &quot;Hedgy&quot;,<br>      &quot;type&quot;: &quot;mammal&quot;<br>    }<br>  ]<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>支持映射这些关系到新的模型，为了让<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>知道怎样变换关系，我们可以使用下面提供的分类方法中的一个来返回<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="815"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">+ (NSValueTransformer )mtl_JSONDictionaryTransformerWithModelClass:(Class)modelClass;<br>+ (NSValueTransformer <em>)mtl_JSONArrayTransformerWithModelClass:(Class)modelClass;<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        当然<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>需要知道这些官和他们的将要转换的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLModel</code>子类，就像和创建一个新的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLModel</code>子类并且实现将要映射到这些对象的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLJSONSerializing</code>协议一样简单。然后我们可以添加一些新的属性到我们<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">CATProfile</code>类中并且实现两个新的转换器。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// CATProfile.h<br>@property(strong, nonatomic) CATOwner owner;   // CATOwner is a MTLModel subclass<br>@property(strong, nonatomic) NSArray <em>friends;  // Array of CATFriend objects<br><br>// CATProfile.m<br>+ (NSValueTransformer </em>)ownerJSONTransformer {<br>    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CATOwner.class];<br>}<br><br>+ (NSValueTransformer <em>)friendsJSONTransformer {<br>    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:CATFriend.class];<br>}<br></em></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        一些有用的补充<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        我们简单的聊了一下<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>在前面,<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>有一个非常棒的特征让通过名字全局注册一个变换器成为可能。假如你正在使用相同的变换器在你整个app中，确保子类化<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">NSValueTransformer</code>，注册你的自定义变换器一次并且在你随后的<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">MTLModels</code>中使用它。<br>    </p><br>    <figure class="code" style="box-sizing: border-box; margin: 0px 0px 1.5em; box-shadow: rgba(0, 0, 0, 0.0588235) 0px 0px 10px; padding: 0px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><br>        <figcaption style="box-sizing: border-box; position: relative; padding: 10px 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(245, 245, 245);"><br>            <span style="box-sizing: border-box;"></span><br>        </figcaption><br>        <div class="highlight" style="box-sizing: border-box; border-radius: 0px 0px 5px 5px; margin-bottom: 0px; overflow-y: hidden; overflow-x: auto; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); background: url(&quot;/images/noise.png?1453217236&quot;) 0% 0% rgb(252, 252, 252);"><br>            <table style="width: 544px;"><br>                <tbody style="box-sizing: border-box;"><br>                    <tr style="box-sizing: border-box;" class="firstRow"><br>                        <td class="gutter" style="box-sizing: border-box; padding: 0px;"><br>                            <pre class="line-numbers" style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 1em 0.8em 0.8em; margin-top: 0px; margin-bottom: 0px; line-height: 1.45em; word-break: break-all; word-wrap: break-word; border-top-style: none; border-bottom-style: none; border-left-style: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; text-align: right; text-shadow: rgb(241, 236, 220) 0px -1px; border-right-width: 1px !important; border-right-style: solid !important; border-right-color: rgb(235, 228, 206) !important; background-image: url(/images/noise.png?1453217236) !important; background-color: rgb(255, 255, 255) !important; background-position: 0% 0%; background-repeat: initial initial !important;">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br></pre><br>                        </td><br>                        <td class="code" style="box-sizing: border-box; padding: 0px;" width="807"><br>                            <pre style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 13px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; box-shadow: none; background-image: none; background-position: initial initial; background-repeat: initial initial;">// In CATProfile.m<br>NSString  const kCATCustomValueTransformerName = @&quot;CATCustomValueTransformer&quot;;<br><br>+ (void)initialize<br>{<br>  // Register NSValueTransformer<br>  if (self == CATProfile.class) {<br>    CATCustomValueTransformer <em>transformer = [CATCustomValueTransformer new];<br>    [NSValueTransformer setValueTransformer:transformer forName:kCATCustomValueTransformerName];<br>  }<br>}<br><br>// Then use the custom transformer to translate properties using Mantle<br>+ (NSValueTransformer </em>)whateverPropertyJSONTransformer {<br>    return [NSValueTransformer valueTransformerForName:kCATCustomValueTransformerName];<br>}<br></pre><br>                        </td><br>                    </tr><br>                </tbody><br>            </table><br>        </div><br>    </figure><br>    <h3 style="box-sizing: border-box; font-family: inherit; line-height: 1.3; color: inherit; margin-top: 32px; margin-bottom: 12px; font-size: 24px;"><br>        结论<br>    </h3><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        <code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">Mantle</code>是一个非常棒的补充处理<code style="box-sizing: border-box; font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; font-size: 14.4px; padding: 2px 4px; color: rgb(199, 37, 78); border-radius: 4px; background-color: rgb(249, 242, 244);">JSON</code>APIs，然而，你也必须意识到假如你不得不处理非常复杂的数据或者不稳定的APIs它也是不合适的。<br>    </p><br>    <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;"><br>        参考资料<br>    </p><br>    <ul style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" class=" list-paddingleft-2"><br>        <li style=""><br>            <a href="http://www.objc.at/mantle" style="box-sizing: border-box; color: rgb(51, 122, 183); text-decoration: none; background-color: transparent;" target="_blank" rel="external">Mantle-Cat</a><br>        </li><br>        <li style=""><br>            <a href="https://github.com/MantleFramework/Mantle" style="box-sizing: border-box; color: rgb(51, 122, 183); text-decoration: none; background-color: transparent;" target="_blank" rel="external">Mantle Framework on Github</a><br>        </li><br>        <li style=""><br>            <a href="http://nshipster.com/nsvaluetransformer/" style="box-sizing: border-box; color: rgb(51, 122, 183); text-decoration: none; background-color: transparent;" target="_blank" rel="external">NSValueTransformer at NSHipster</a><br>        </li><br>        <li style=""><br>            <a href="http://www.dominikgruber.com/articles/2013/08/mantle-as-a-model-layer-for-ios-and-os-x-apps" style="box-sizing: border-box; color: rgb(51, 122, 183); text-decoration: none; background-color: transparent;" target="_blank" rel="external">Mantle as a Model Layer for iOS and OS X Apps</a><br>        </li><br>        <li style=""><br>            <a href="http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/" style="box-sizing: border-box; color: rgb(51, 122, 183); text-decoration: none; background-color: transparent;" target="_blank" rel="external">iOS JSON 模型转换库评测</a><br>        </li><br>    </ul><br></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/02/常用第三方使用方法-未完成/" rel="prev">常用第三方使用方法-未完成</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/02/initWithNibName、initWithCoder、awakeFromNib和-loadNibNamed详解/" rel="next">initWithNibName、initWithCoder、awakeFromNib和 loadNibNamed详解</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/06/02/使用Mantle高效构建Model/"
+                   data-title="使用Mantle高效构建Model" data-url="http://fly1324928301.github.io/2016/06/02/使用Mantle高效构建Model/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/xiaomai.jpg" alt="Fly" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Fly</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">括弧笑</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Fly1324928301" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/fly1324928301" target="_blank">weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/feng-lian-yi-73" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">        使用Mantle高效构建Model    </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.1.</span> <span class="nav-text">        概述    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.2.</span> <span class="nav-text">        NSURL ↔︎ JSON string    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.3.</span> <span class="nav-text">        CLLocationCoordinate2D ↔︎ JSON object    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.4.</span> <span class="nav-text">        enum ↔︎ JSON string    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.5.</span> <span class="nav-text">        BOOL ↔︎ JSON boolean    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.6.</span> <span class="nav-text">        从JSON创建模型对象    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.7.</span> <span class="nav-text">        从模型对象创建JSON    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.8.</span> <span class="nav-text">        映射数组和字典    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.9.</span> <span class="nav-text">        一些有用的补充    </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.0.10.</span> <span class="nav-text">        结论    </span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fly</span>
+</div>
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"fenglianyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
